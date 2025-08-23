@@ -62,23 +62,23 @@ header {
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
 }
 
-.sl-markdown-content {
+.sl-container {
   position: relative;
 }
 
-.sl-markdown-content:has(.hero-gradient#welcome):before {
+.sl-container:has(.hero-gradient#welcome):before {
   content: '';
   background-image: url('/brand/logo-mark.png');
   background-repeat: no-repeat;
-  background-size: 70%;
-  background-position-x: right;
-  background-position-y: bottom;
+  background-size: 35rem;
+  background-position-x: 25rem;
+  background-position-y: top;
   position: absolute;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
-  opacity: 0.05;
+  opacity: 0.1;
   z-index: -1;
 }
 
@@ -93,10 +93,10 @@ header {
     text-align: center;
   }
 
-  .sl-markdown-content:has(.hero-gradient#welcome):before {
-    background-size: 150%;
-    background-position-x: left;
-    background-position-y: bottom;
+  .sl-container:has(.hero-gradient#welcome):before {
+    background-size: 15rem;
+    background-position-x: right;
+    background-position-y: top;
   }
 }
 
