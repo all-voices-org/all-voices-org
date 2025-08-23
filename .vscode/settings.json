@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "[mdx]": {
+    "prettier.singleQuote": false
+  },
+  "[markdown]": {
+    "prettier.singleQuote": false
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  }
+}

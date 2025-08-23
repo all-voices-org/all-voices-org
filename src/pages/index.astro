@@ -1,0 +1,15 @@
+---
+const supported = ['en', 'es', 'fr', 'ar', 'sw', 'ht']
+---
+
+<script>
+  const supported = ['en', 'es', 'fr', 'ar', 'sw', 'ht']
+  const best = (navigator.language || 'en').split('-')[0]
+  const target = supported.includes(best) ? best : 'en'
+  if (location.pathname === '/' && !location.hash) {
+    setTimeout(() => location.replace(`/${target}/`), 0)
+  }
+</script>
+<noscript>
+  <meta http-equiv="refresh" content="0; url=/en/" />
+</noscript>

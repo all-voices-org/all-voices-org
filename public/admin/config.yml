@@ -1,0 +1,51 @@
+backend:
+  name: github
+  repo: all-voices-org/all-voices-org
+  branch: main
+
+media_folder: 'public/assets/uploads'
+public_folder: '/assets/uploads'
+publish_mode: editorial_workflow
+
+collections:
+  - name: 'pages'
+    label: 'Pages'
+    folder: 'src/content/pages'
+    create: false
+    nested: { depth: 2 }
+    fields:
+      - { name: 'title', widget: 'string' }
+      - {
+          name: 'lang',
+          widget: 'select',
+          options: ['en', 'es', 'fr', 'ar', 'sw', 'ht']
+        }
+      - { name: 'navOrder', widget: 'number', required: false }
+      - { name: 'body', widget: 'markdown' }
+
+  - name: 'resources'
+    label: 'Resources'
+    folder: 'src/content/resources'
+    create: true
+    nested: { depth: 2 }
+    fields:
+      - { name: 'title', widget: 'string' }
+      - {
+          name: 'lang',
+          widget: 'select',
+          options: ['en', 'es', 'fr', 'ar', 'sw', 'ht']
+        }
+      - {
+          name: 'proficiency',
+          widget: 'select',
+          options: ['beginner', 'intermediate', 'advanced']
+        }
+      - { name: 'topics', widget: 'list', summary: '{{fields.item}}' }
+      - { name: 'type', widget: 'select', options: ['pdf', 'video', 'link'] }
+      - { name: 'fileUrl', widget: 'file', required: false }
+      - { name: 'videoUrl', widget: 'string', required: false }
+      - { name: 'externalUrl', widget: 'string', required: false }
+      - { name: 'description', widget: 'text', required: false }
+      - { name: 'source', widget: 'string', required: false }
+      - { name: 'duration', widget: 'string', required: false }
+      - { name: 'body', widget: 'markdown', required: false }
