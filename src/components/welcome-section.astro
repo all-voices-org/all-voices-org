@@ -1,0 +1,28 @@
+---
+export interface Props {
+  title?: string
+  description?: string
+  imageAlt?: string
+}
+
+const {
+  title = 'Welcome to All Voices',
+  description = 'Free ESL resources for Johnson County — download guides and watch lessons in your language.',
+  imageAlt = 'Josie and Olga from All Voices seated at a table'
+} = Astro.props
+---
+
+<section id="welcome" class="hero-gradient">
+  <div class="hero-content">
+    <div>
+      <h2>{title}</h2>
+      <p>
+        {description}
+      </p>
+    </div>
+    <picture>
+      <source srcset="/brand/hero-josie-olga.webp" type="image/webp" />
+      <img src="/brand/hero-josie-olga.png" alt={imageAlt} class="hero-image" />
+    </picture>
+  </div>
+</section>
