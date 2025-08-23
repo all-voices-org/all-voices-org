@@ -10,7 +10,7 @@ publish_mode: editorial_workflow
 collections:
   - name: 'pages'
     label: 'Pages'
-    folder: 'src/content/pages'
+    folder: 'src/content/docs'
     create: false
     nested: { depth: 2 }
     fields:
