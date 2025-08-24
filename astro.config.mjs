@@ -13,7 +13,7 @@ export default defineConfig({
       title: '',
       logo: {
         src: './src/assets/logo-bubble.png',
-        alt: 'All Voices — community ESL resources'
+        alt: 'All Voices — community ESL resources',
       },
       favicon: './src/assets/logo-mark.png',
       customCss: ['./src/styles/custom.css'],
@@ -22,22 +22,48 @@ export default defineConfig({
         en: { label: 'English' },
         es: { label: 'Español' },
         fr: { label: 'Français' },
-        ar: { label: 'العربية' },
+        ar: { label: 'العربية', dir: 'rtl' },
         sw: { label: 'Kiswahili' },
-        ht: { label: 'Kreyòl Ayisyen' }
+        ht: { label: 'Kreyòl Ayisyen' },
       },
       sidebar: [
         {
           label: 'About',
-          items: [{ label: 'About All Voices', slug: 'about' }]
+          slug: 'about',
+          translations: {
+            es: 'Acerca de',
+            fr: 'À propos',
+            ar: 'حول',
+            sw: 'Kuhusu',
+            ht: 'Sou',
+          },
         },
         {
           label: 'Resources',
-          items: [{ label: 'Browse Resources', link: '/resources' }]
-        }
-      ]
-    })
+          translations: {
+            es: 'Recursos',
+            fr: 'Ressources',
+            ar: 'الموارد',
+            sw: 'Rasilimali',
+            ht: 'Resous',
+          },
+          items: [
+            {
+              label: 'Browse All',
+              link: '/resources',
+              translations: {
+                es: 'Explorar todo',
+                fr: 'Parcourir tout',
+                ar: 'تصفح الكل',
+                sw: 'Kagua yote',
+                ht: 'Browse tout',
+              },
+            },
+          ],
+        },
+      ],
+    }),
   ],
 
-  adapter: netlify()
+  adapter: netlify(),
 })
