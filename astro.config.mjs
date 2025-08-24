@@ -9,6 +9,7 @@ export default defineConfig({
   output: 'server',
   integrations: [
     starlight({
+      prerender: false,
       title: '',
       logo: {
         src: './src/assets/logo-bubble.png',
