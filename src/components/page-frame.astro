@@ -1,0 +1,18 @@
+---
+import AstroPageFrame from '@astrojs/starlight/components/PageFrame.astro'
+import Footer from './footer.astro'
+
+const url = new URL(Astro.url)
+const isHomePage = url.pathname.split('/').filter(Boolean).length <= 1
+---
+
+<AstroPageFrame {...Astro.props}>
+  <slot />
+  <Fragment slot="header">
+    <slot name="header" />
+  </Fragment>
+  <Fragment slot="sidebar">
+    <slot name="sidebar" />
+  </Fragment>
+</AstroPageFrame>
+{isHomePage && <Footer />}
