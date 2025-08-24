@@ -1,8 +1,7 @@
 ---
 title: 'Kuhusu All Voices'
+lang: sw
 ---
-
-# Kuhusu All Voices
 
 All Voices ni mpango wa jamii unaopatia rasilimali za bure za ESL (Kiingereza kama Lugha ya Pili) kwa wakazi wa Kaunti ya Johnson. Dhamira yetu ni kuwasaidia wageni wapya kupata habari na huduma muhimu kwa lugha yao ya asili wakati wanajifunza Kiingereza.
 

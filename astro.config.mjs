@@ -9,6 +9,7 @@ export default defineConfig({
   output: 'server',
   integrations: [
     starlight({
+      prerender: false,
       title: '',
       logo: {
         src: './src/assets/logo-bubble.png',
@@ -16,23 +17,52 @@ export default defineConfig({
       },
       favicon: './src/assets/logo-mark.png',
       customCss: ['./src/styles/custom.css'],
+      components: {
+        PageFrame: './src/components/page-frame.astro'
+      },
       defaultLocale: 'en',
       locales: {
         en: { label: 'English' },
         es: { label: 'Español' },
         fr: { label: 'Français' },
-        ar: { label: 'العربية' },
+        ar: { label: 'العربية', dir: 'rtl' },
         sw: { label: 'Kiswahili' },
         ht: { label: 'Kreyòl Ayisyen' }
       },
       sidebar: [
         {
           label: 'About',
-          items: [{ label: 'About All Voices', slug: 'about' }]
+          slug: 'about',
+          translations: {
+            es: 'Acerca de',
+            fr: 'À propos',
+            ar: 'حول',
+            sw: 'Kuhusu',
+            ht: 'Sou'
+          }
         },
         {
           label: 'Resources',
-          items: [{ label: 'Browse Resources', link: '/resources' }]
+          translations: {
+            es: 'Recursos',
+            fr: 'Ressources',
+            ar: 'الموارد',
+            sw: 'Rasilimali',
+            ht: 'Resous'
+          },
+          items: [
+            {
+              label: 'Browse All',
+              link: '/resources',
+              translations: {
+                es: 'Explorar todo',
+                fr: 'Parcourir tout',
+                ar: 'تصفح الكل',
+                sw: 'Kagua yote',
+                ht: 'Browse tout'
+              }
+            }
+          ]
         }
       ]
     })

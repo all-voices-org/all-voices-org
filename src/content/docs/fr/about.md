@@ -1,8 +1,7 @@
 ---
 title: "À propos d'All Voices"
+lang: fr
 ---
-
-# À propos d'All Voices
 
 All Voices est une initiative communautaire fournissant des ressources ESL (Anglais Langue Seconde) gratuites pour les résidents du Comté de Johnson. Notre mission est d'aider les nouveaux arrivants à accéder à des informations et services essentiels dans leur langue natale pendant qu'ils apprennent l'anglais.
 
