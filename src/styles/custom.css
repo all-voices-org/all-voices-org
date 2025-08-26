@@ -82,6 +82,15 @@ header {
   z-index: -1;
 }
 
+.sl-link-button {
+  --sl-icon-color: var(--sl-color-bg);
+}
+
+starlight-menu-button button {
+  background-color: var(--sl-color-bg);
+  box-shadow: none;
+}
+
 @media (max-width: 768px) {
   .main-frame {
     padding-top: 1.5rem;
