@@ -3,6 +3,7 @@
   --sl-color-bg: #ffffff;
   --sl-color-accent: #7cc6b0;
   --sl-color-text-accent: #3baf78;
+  --sl-icon-color: #3baf78;
 
   --brand-gradient: linear-gradient(
     90deg,
@@ -24,7 +25,6 @@ header {
   backdrop-filter: blur(16px);
   position: sticky;
   top: 0;
-  z-index: 100;
 }
 
 .main-frame {
