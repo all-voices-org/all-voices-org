@@ -38,7 +38,18 @@ export default defineConfig({
             fr: 'À propos',
             ar: 'حول',
             sw: 'Kuhusu',
-            ht: 'Sou'
+            ht: 'Konsènan'
+          }
+        },
+        {
+          label: 'Find a Tutor',
+          slug: 'tutoring',
+          translations: {
+            es: 'Buscar un Tutor',
+            fr: 'Trouver un tuteur',
+            ar: 'ابحث عن معلم',
+            sw: 'Tafuta Mwalimu',
+            ht: 'Jwenn yon Titè'
           }
         },
         {

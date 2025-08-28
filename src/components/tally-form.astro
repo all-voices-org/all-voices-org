@@ -1,0 +1,48 @@
+---
+interface Props {
+  id: string
+  extraParams?: Record<string, any>
+}
+
+const { id } = Astro.props
+
+const url = new URL(`https://tally.so/embed/${id}`)
+url.searchParams.set('alignLeft', '1')
+url.searchParams.set('hideTitle', '1')
+url.searchParams.set('dynamicHeight', '1')
+
+console.log(Astro.props.extraParams)
+
+if (Astro.props.extraParams != null) {
+  Object.entries(Astro.props.extraParams).forEach(([key, value]) => {
+    if (value != null) {
+      url.searchParams.set(key, value)
+    }
+  })
+}
+
+const src = url.toString()
+---
+
+<style>
+  .tally-form-container {
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #f6f7f9;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.5rem;
+  }
+
+  .tally-form-embed {
+    height: 100vh;
+    min-height: 100px;
+    overflow: hidden;
+    border: none;
+  }
+</style>
+
+<div class="tally-form-container">
+  <iframe class="tally-form-embed" src={src} width="100%"></iframe>
+</div>
+
+<script async is:inline src="https://tally.so/widgets/embed.js"></script>
