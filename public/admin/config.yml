@@ -33,12 +33,14 @@ collections:
       - {
           name: 'lang',
           widget: 'select',
-          options: ['en', 'es', 'fr', 'ar', 'sw', 'ht']
+          options: ['en', 'es', 'fr', 'ar', 'sw', 'ht'],
+          required: false
         }
       - {
           name: 'proficiency',
           widget: 'select',
-          options: ['beginner', 'intermediate', 'advanced']
+          options: ['beginner', 'intermediate', 'advanced'],
+          required: false
         }
       - { name: 'topics', widget: 'list', summary: '{{fields.item}}' }
       - { name: 'type', widget: 'select', options: ['pdf', 'video', 'link'] }

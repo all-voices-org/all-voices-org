@@ -20,8 +20,8 @@ const resources = defineCollection({
   schema: z
     .object({
       title: z.string(),
-      lang: z.enum(locales),
-      proficiency: z.enum(['beginner', 'intermediate', 'advanced']),
+      lang: z.enum(locales).optional(),
+      proficiency: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
       topics: z.array(z.string()).default([]),
       type: z.enum(['pdf', 'video', 'link']),
       fileUrl: z.string().url().optional(), // for pdf

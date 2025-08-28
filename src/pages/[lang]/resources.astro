@@ -17,7 +17,7 @@ const selectedType = url.searchParams.get('type') || ''
 const selectedTopic = url.searchParams.get('topic') || ''
 
 const allResources = await getCollection('resources', (resource) => {
-  return resource.data.lang === lang
+  return resource.data.lang == null || resource.data.lang === lang
 })
 
 let filteredItems = allResources.filter((resource) => {
@@ -208,12 +208,12 @@ const pageProps = {
             {data.description && <p>{data.description}</p>}
 
             <div class="resource-meta">
-              <strong>
-                {data.proficiency.charAt(0).toUpperCase() +
-                  data.proficiency.slice(1)}
-              </strong>
-              <span>•</span>
-              <span>{data.type.toUpperCase()}</span>
+              {data.proficiency && (
+                <strong>
+                  {data.proficiency.charAt(0).toUpperCase() +
+                    data.proficiency.slice(1)}
+                </strong>
+              )}
               {data.duration && (
                 <>
                   <span>•</span>
