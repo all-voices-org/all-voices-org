@@ -55,58 +55,6 @@ const pageProps = {
 ---
 
 <StarlightPage {...pageProps}>
-  <script>
-    function getEffectiveTheme() {
-      const stored = localStorage.getItem('starlight-theme')
-
-      if (stored === 'dark') return 'dark'
-      if (stored === 'light') return 'light'
-
-      if (
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-      ) {
-        return 'dark'
-      }
-
-      return 'light'
-    }
-
-    function updateTheme() {
-      const theme = getEffectiveTheme()
-      document.documentElement.setAttribute('data-theme', theme)
-    }
-
-    updateTheme()
-
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'starlight-theme') {
-        updateTheme()
-      }
-    })
-
-    if (window.matchMedia) {
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', () => {
-          const stored = localStorage.getItem('starlight-theme')
-          if (!stored || stored === 'auto') {
-            updateTheme()
-          }
-        })
-    }
-
-    document.addEventListener('click', (e) => {
-      if (
-        e.target &&
-        (e.target as Element).closest &&
-        (e.target as Element).closest('[data-theme-toggle]')
-      ) {
-        setTimeout(updateTheme, 50)
-      }
-    })
-  </script>
-
   <style>
     .filters {
       background: var(--sl-color-bg-nav);
