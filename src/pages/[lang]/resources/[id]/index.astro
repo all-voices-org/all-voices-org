@@ -1,0 +1,82 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import type { StarlightPageProps } from '@astrojs/starlight/props'
+import { getCollection } from 'astro:content'
+import type { TOptions } from 'i18next'
+
+interface Props {
+  lang: string
+  id: string
+}
+
+const { lang, id: resourceId } = Astro.params
+
+const allResources = await getCollection('resources', (resource) => {
+  return `${lang}/${resourceId}` === resource.slug
+})
+
+const resource = allResources.at(0)
+
+const pageProps: StarlightPageProps = {
+  frontmatter: {
+    title: resource?.data.title ?? Astro.locals.t('resource.notFound.title'),
+    template: 'splash'
+  },
+  lang: lang,
+}
+
+const notFoundSuggestion = Astro.locals.t('resource.notFound.suggestion', {
+  link: `<a href="/${lang}/resources">${Astro.locals.t('resource.notFound.linkText')}</a>`,
+  interpolation: { escapeValue: false }
+} as TOptions)
+---
+
+<StarlightPage {...pageProps}>
+  {
+    resource == null && (
+      <p>
+        {Astro.locals.t('resource.notFound.content')}
+      </p>
+
+      <p set:html={notFoundSuggestion} />
+    )
+  }
+
+  {
+    resource != null && (
+      <>
+        {resource.data.description && <p>{resource.data.description}</p>}
+
+        {resource.body && (
+          <div>
+            {resource.body}
+          </div>
+        )}
+
+        {resource.data.type === 'video' && (
+          <video
+            src={resource.data.file}
+            controls={true}
+          />
+        )}
+
+        {resource.data.type === 'pdf' && (
+          <embed
+            src={resource.data.file}
+            type="application/pdf"
+            width="100%"
+            height="800px"
+          />
+        )}
+
+        {resource.data.url && resource.data.type === 'youtube-video' && (
+          <iframe
+            src={resource.data.url}
+            width="100%"
+            height="800px"
+          />
+        )}
+      </>
+    )
+  }
+</StarlightPage>

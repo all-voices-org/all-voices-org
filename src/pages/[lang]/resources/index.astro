@@ -1,0 +1,285 @@
+---
+import { getCollection, type CollectionEntry, z } from 'astro:content'
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import {
+  Card,
+  CardGrid,
+  Icon,
+  LinkButton,
+  LinkCard
+} from '@astrojs/starlight/components'
+import LanguageBadge from '../../../components/language-badge.astro'
+import { languageNames, locales, type Locale } from '../../../content.config'
+
+export async function getStaticPaths() {
+  return locales.map((lang) => ({
+    params: { lang }
+  }))
+}
+
+const { lang } = Astro.params
+
+const url = Astro.url
+const selectedType = url.searchParams.get('type') ?? ''
+const selectedLanguage = url.searchParams.get('language') ?? (lang === 'en' ? '' : lang)
+
+const isCriteriaSet = Boolean(selectedType || selectedLanguage)
+
+const allResources = await getCollection('resources', (resource) => {
+  return resource.data.title != null
+})
+
+type ResourceWithLang = CollectionEntry<'resources'> & {
+  lang: Locale
+}
+
+let filteredItems: ResourceWithLang[] = allResources
+  .map((item) => {
+    const [lang, id] = item.slug.split('/')
+
+    return {
+      ...item,
+      lang: lang as Locale,
+      id
+    }
+  })
+  .filter((resource) => {
+    const { lang, data } = resource
+
+    if (selectedLanguage && lang !== selectedLanguage) {
+      return false
+    }
+
+    if (selectedType && data.type !== selectedType) {
+      return false
+    }
+
+    return true
+  })
+
+const pageProps = {
+  frontmatter: {
+    title: Astro.locals.t('resources.title'),
+    description: Astro.locals.t('resources.description')
+  },
+  lang: lang
+}
+---
+
+<StarlightPage {...pageProps}>
+  <style>
+    .filters-container {
+      padding-left: 0.5rem;
+      background: var(--sl-color-bg-nav);
+      border-radius: 0.5rem;
+      border: 1px solid var(--sl-color-hairline);
+    }
+
+    .filters-container summary {
+      padding: 0.5rem;
+      margin: 0;
+    }
+
+    .filters-container summary::before {
+      color: var(--sl-icon-color);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 0;
+      padding-bottom: 1.5rem;
+      padding-right: 1.5rem;
+      align-items: end;
+      margin-top: 0;
+      margin-left: 0.5rem;
+    }
+
+    .filters label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 500;
+      color: var(--sl-color-text);
+      font-size: 0.9rem;
+      min-width: 160px;
+      flex: auto;
+      margin-top: 0;
+      margin-left: 0.5rem;
+    }
+
+    .filters select {
+      padding: 0.5rem;
+      margin-left: -0.5rem;
+      border: 1px solid var(--sl-color-hairline);
+      border-radius: 6px;
+      background: var(--sl-color-bg);
+      color: var(--sl-color-text);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      flex: auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .buttons .sl-link-button.secondary {
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .empty-state {
+      flex-direction: row;
+      flex: content;
+      text-align: center;
+      align-self: center;
+      justify-self: center;
+      justify-items: center;
+      padding: 2rem;
+      color: var(--sl-color-text);
+      font-size: 1.1rem;
+    }
+  </style>
+
+  <p>{pageProps.frontmatter.description}</p>
+
+  <form>
+    <details class="filters-container">
+      <summary>
+        <p>{Astro.locals.t('resources.filters.title')}</p>
+      </summary>
+
+      <div class="filters">
+        <label>
+          {Astro.locals.t('resources.filters.resourceType')}
+          <select name="type" onchange="this.form.submit()">
+            <option value="" selected={selectedType === ''}>Any Type</option>
+            <option value="pdf" selected={selectedType === 'pdf'}
+              >PDF Document</option
+            >
+            <option value="video" selected={selectedType === 'video'}
+              >Video</option
+            >
+            <option value="link" selected={selectedType === 'link'}
+              >Website Link</option
+            >
+          </select>
+        </label>
+
+        <label>
+          {Astro.locals.t('resources.filters.language')}
+          <select name="language" onchange="this.form.submit()">
+            <option value="" selected={selectedLanguage === ''}
+              >Any Language</option
+            >
+            {
+              locales.map((language) => (
+                <option
+                  value={language}
+                  selected={selectedLanguage === language}
+                >
+                  {languageNames[language] ?? language}
+                </option>
+              ))
+            }
+          </select>
+        </label>
+      </div>
+    </details>
+
+    <noscript><button type="submit">Apply Filters</button></noscript>
+  </form>
+
+  {
+    filteredItems.length === 0 ? (
+      <div class="empty-state">
+        <Icon name="magnifier" size="2em" />
+        {isCriteriaSet ? (
+          <p>
+            {Astro.locals.t('resources.emptyState.noResults')}
+            <br />
+            {Astro.locals.t('resources.emptyState.tryAdjustingFilters')}
+          </p>
+        ) : (
+          <p>{Astro.locals.t('resources.emptyState.noResults')}</p>
+        )}
+      </div>
+    ) : (
+      <CardGrid>
+        {filteredItems.map(({ id, data, lang }) => (
+          <Card title={data.title ?? ''}>
+            {lang && <LanguageBadge lang={lang} />}
+            {data.description && <p>{data.description}</p>}
+
+            <div class="buttons">
+              {data.file && data.type === 'video' && (
+                <LinkButton 
+                  href={`/${lang}/resources/${id}`}
+                  icon="seti:video"
+                  iconPlacement="end"
+                  variant="secondary"
+                >
+                  {Astro.locals.t(`resources.card.file.view`)}
+                </LinkButton>
+              )}
+
+              {data.file && data.type === 'pdf' && (
+                <LinkButton
+                  href={`/${lang}/resources/${id}`}
+                  icon="seti:pdf"
+                  iconPlacement="end"
+                  variant="secondary"
+                >
+                  {Astro.locals.t(`resources.card.file.view`)}
+                </LinkButton>
+              
+                <LinkButton
+                  href={`/${lang}/resources/${id}`}
+                  download
+                  icon="download"
+                  iconPlacement="end"
+                  variant="secondary"
+                >
+                  {Astro.locals.t(`resources.card.file.download`)}
+                </LinkButton>
+              )}
+
+              {data.url && data.type === 'link' && (
+                <LinkButton
+                  href={data.url}
+                  icon="external"
+                  iconPlacement="end"
+                  variant="secondary"
+                >
+                  {Astro.locals.t(`resources.card.url.goTo`)}
+                </LinkButton>
+              )}
+
+              {data.url && data.type === 'youtube-video' && (
+                <LinkButton
+                  href={`/${lang}/resources/${id}`}
+                  icon="youtube"
+                  iconPlacement="end"
+                  variant="secondary"
+                >
+                  {Astro.locals.t(`resources.card.file.view`)}
+                </LinkButton>
+              )}
+            </div>
+          </Card>
+        ))}
+      </CardGrid>
+    )
+  }
+</StarlightPage>

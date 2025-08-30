@@ -1,0 +1,19 @@
+{
+  "resources.title": "Ressources",
+  "resources.description": "Trouvez des ressources ESL et des informations locales dans votre langue.",
+  "resources.filters.title": "Filtres",
+  "resources.filters.resourceType": "Type de ressource",
+  "resources.filters.topic": "Sujet",
+  "resources.filters.language": "Langue",
+  "resources.emptyState.noResults": "Aucune ressource trouvée.",
+  "resources.emptyState.tryAdjustingFilters": "Essayez de modifier les filtres ci-dessus.",
+  "resources.card.file.view": "Voir",
+  "resources.card.file.open": "Ouvrir",
+  "resources.card.file.download": "Télécharger",
+  "resources.card.url.goTo": "Ouvrir le lien",
+
+  "resource.notFound.title": "Ressource non trouvée",
+  "resource.notFound.content": "La ressource que vous recherchez est introuvable. Elle a peut-être été supprimée ou le lien est incorrect.",
+  "resource.notFound.suggestion": "Veuillez vérifier l'URL ou {{link}}.",
+  "resource.notFound.linkText": "retourner à la page des ressources"
+}

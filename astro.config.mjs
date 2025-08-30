@@ -79,5 +79,6 @@ export default defineConfig({
     })
   ],
 
+  // adapter: netlify({ edgeMiddleware: false })
   adapter: netlify()
 })

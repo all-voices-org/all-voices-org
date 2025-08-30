@@ -3,9 +3,25 @@ backend:
   repo: all-voices-org/all-voices-org
   branch: main
 
+local_backend: true
+
 media_folder: 'public/assets/uploads'
 public_folder: '/assets/uploads'
 publish_mode: editorial_workflow
+
+i18n:
+  # Required and can be one of multiple_folders, multiple_files or single_file
+  # multiple_folders - persists files in `<folder>/<locale>/<slug>.<extension>`
+  # multiple_files - persists files in `<folder>/<slug>.<locale>.<extension>`
+  # single_file - persists a single file in `<folder>/<slug>.<extension>`
+  structure: multiple_folders
+
+  # Required - a list of locales to show in the editor UI
+  locales: [en, es, fr, ar, sw, ht]
+
+  # Optional, defaults to the first item in locales.
+  # The locale to be used for fields validation and as a baseline for the entry.
+  default_locale: en
 
 collections:
   - name: 'pages'
@@ -27,27 +43,43 @@ collections:
     label: 'Resources'
     folder: 'src/content/resources'
     create: true
-    nested: { depth: 2 }
+    i18n: true
+
+    # nested: { depth: 2 }
     fields:
-      - { name: 'title', widget: 'string' }
+      - { name: 'title', widget: 'string', i18n: true, duplicate: true }
       - {
-          name: 'lang',
-          widget: 'select',
-          options: ['en', 'es', 'fr', 'ar', 'sw', 'ht'],
-          required: false
+          name: 'description',
+          widget: 'string',
+          required: false,
+          i18n: true,
+          duplicate: true
         }
       - {
-          name: 'proficiency',
+          name: 'type',
           widget: 'select',
-          options: ['beginner', 'intermediate', 'advanced'],
-          required: false
+          options: ['pdf', 'video', 'youtube-video', 'link'],
+          i18n: true,
+          duplicate: true
         }
-      - { name: 'topics', widget: 'list', summary: '{{fields.item}}' }
-      - { name: 'type', widget: 'select', options: ['pdf', 'video', 'link'] }
-      - { name: 'fileUrl', widget: 'file', required: false }
-      - { name: 'videoUrl', widget: 'string', required: false }
-      - { name: 'externalUrl', widget: 'string', required: false }
-      - { name: 'description', widget: 'text', required: false }
-      - { name: 'source', widget: 'string', required: false }
-      - { name: 'duration', widget: 'string', required: false }
-      - { name: 'body', widget: 'markdown', required: false }
+      - {
+          name: 'file',
+          widget: 'file',
+          required: false,
+          i18n: true,
+          duplicate: true
+        }
+      - {
+          name: 'url',
+          widget: 'string',
+          required: false,
+          i18n: true,
+          duplicate: true
+        }
+      - {
+          name: 'body',
+          widget: 'markdown',
+          required: false,
+          i18n: true,
+          duplicate: true
+        }

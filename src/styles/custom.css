@@ -82,8 +82,28 @@ header {
   z-index: -1;
 }
 
-.sl-link-button {
+.sl-link-button.primary {
   --sl-icon-color: var(--sl-color-bg);
+}
+
+.sl-link-button.secondary {
+  padding: 0.5rem 1rem;
+  border-color: var(--sl-color-accent);
+}
+
+.sl-link-button.secondary:hover {
+  background: var(--sl-color-bg);
+}
+
+.card {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--sl-color-bg-nav);
+}
+
+.card-grid {
+  gap: 1rem;
 }
 
 starlight-menu-button button {
@@ -91,11 +111,11 @@ starlight-menu-button button {
   box-shadow: none;
 }
 
-@media (max-width: 768px) {
-  .main-frame {
-    padding-top: 1.5rem;
-  }
+.main-frame {
+  padding-top: 1.5rem;
+}
 
+@media (max-width: 50rem) {
   .hero-content {
     padding: 1rem 0 0 0;
     grid-template-columns: 1fr;
