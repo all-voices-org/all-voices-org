@@ -28,24 +28,18 @@ collections:
     label: 'Pages'
     folder: 'src/content/docs'
     create: false
-    nested: { depth: 2 }
+    i18n: true
+    sortable_fields: []
     fields:
-      - { name: 'title', widget: 'string' }
-      - {
-          name: 'lang',
-          widget: 'select',
-          options: ['en', 'es', 'fr', 'ar', 'sw', 'ht']
-        }
-      - { name: 'navOrder', widget: 'number', required: false }
-      - { name: 'body', widget: 'markdown' }
+      - { name: 'title', widget: 'string', i18n: true, duplicate: true }
+      - { name: 'body', widget: 'markdown', i18n: true, duplicate: true }
 
   - name: 'resources'
     label: 'Resources'
     folder: 'src/content/resources'
     create: true
     i18n: true
-
-    # nested: { depth: 2 }
+    sortable_fields: []
     fields:
       - { name: 'title', widget: 'string', i18n: true, duplicate: true }
       - {
