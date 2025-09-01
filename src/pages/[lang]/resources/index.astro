@@ -9,7 +9,7 @@ import {
   LinkCard
 } from '@astrojs/starlight/components'
 import LanguageBadge from '../../../components/language-badge.astro'
-import { languageNames, locales, type Locale } from '../../../content.config'
+import { languageNames, locales, type Locale, type ResourceContent } from '../../../content.config'
 
 export async function getStaticPaths() {
   return locales.map((lang) => ({
@@ -26,31 +26,33 @@ const selectedLanguage = url.searchParams.get('language') ?? (lang === 'en' ? ''
 const isCriteriaSet = Boolean(selectedType || selectedLanguage)
 
 const allResources = await getCollection('resources', (resource) => {
-  return resource.data.title != null
+  return resource.data != null && resource.data.title != null
 })
 
-type ResourceWithLang = CollectionEntry<'resources'> & {
+type Resource = CollectionEntry<'resources'> & {
+  content: ResourceContent
   lang: Locale
 }
 
-let filteredItems: ResourceWithLang[] = allResources
+let filteredItems: Resource[] = allResources
   .map((item) => {
     const [lang, id] = item.slug.split('/')
 
     return {
       ...item,
+      content: item.data?.content?.at(0) as ResourceContent,
       lang: lang as Locale,
       id
     }
   })
   .filter((resource) => {
-    const { lang, data } = resource
+    const { lang, content } = resource
 
     if (selectedLanguage && lang !== selectedLanguage) {
       return false
     }
 
-    if (selectedType && data.type !== selectedType) {
+    if (selectedType && content?.type !== selectedType) {
       return false
     }
 
@@ -117,19 +119,6 @@ const pageProps = {
       color: var(--sl-color-text);
       font-size: 0.9rem;
       cursor: pointer;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 1rem;
-      flex: auto;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-
-    .buttons .sl-link-button.secondary {
-      margin: 0;
     }
 
     @media (max-width: 640px) {
@@ -217,66 +206,69 @@ const pageProps = {
       </div>
     ) : (
       <CardGrid>
-        {filteredItems.map(({ id, data, lang }) => (
-          <Card title={data.title ?? ''}>
+        {filteredItems
+        .map(({ id, data, content, lang }) => (
+          <Card title={data?.title ?? ''}>
             {lang && <LanguageBadge lang={lang} />}
-            {data.description && <p>{data.description}</p>}
+            {data?.summary && <p class="card-summary">{data.summary}</p>}
 
-            <div class="buttons">
-              {data.file && data.type === 'video' && (
-                <LinkButton 
-                  href={`/${lang}/resources/${id}`}
-                  icon="seti:video"
-                  iconPlacement="end"
-                  variant="secondary"
-                >
-                  {Astro.locals.t(`resources.card.file.view`)}
-                </LinkButton>
-              )}
+            <footer class="card-footer">
+              <div class="card-actions" role="group" aria-label="Card actions">
+                {content && content.type === 'video' && (
+                  <LinkButton 
+                    href={`/${lang}/resources/${id}`}
+                    icon="seti:video"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    {Astro.locals.t(`resources.card.file.view`)}
+                  </LinkButton>
+                )}
 
-              {data.file && data.type === 'pdf' && (
-                <LinkButton
-                  href={`/${lang}/resources/${id}`}
-                  icon="seti:pdf"
-                  iconPlacement="end"
-                  variant="secondary"
-                >
-                  {Astro.locals.t(`resources.card.file.view`)}
-                </LinkButton>
-              
-                <LinkButton
-                  href={`/${lang}/resources/${id}`}
-                  download
-                  icon="download"
-                  iconPlacement="end"
-                  variant="secondary"
-                >
-                  {Astro.locals.t(`resources.card.file.download`)}
-                </LinkButton>
-              )}
+                {content && content.type === 'pdf' && (
+                  <LinkButton
+                    href={`/${lang}/resources/${id}`}
+                    icon="seti:pdf"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    {Astro.locals.t(`resources.card.file.view`)}
+                  </LinkButton>
+                
+                  <LinkButton
+                    href={`/${lang}/resources/${id}`}
+                    download
+                    icon="download"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    {Astro.locals.t(`resources.card.file.download`)}
+                  </LinkButton>
+                )}
 
-              {data.url && data.type === 'link' && (
-                <LinkButton
-                  href={data.url}
-                  icon="external"
-                  iconPlacement="end"
-                  variant="secondary"
-                >
-                  {Astro.locals.t(`resources.card.url.goTo`)}
-                </LinkButton>
-              )}
+                {content && content.type === 'link' && (
+                  <LinkButton
+                    href={content.url}
+                    icon="external"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    {Astro.locals.t(`resources.card.url.goTo`)}
+                  </LinkButton>
+                )}
 
-              {data.url && data.type === 'youtube-video' && (
-                <LinkButton
-                  href={`/${lang}/resources/${id}`}
-                  icon="youtube"
-                  iconPlacement="end"
-                  variant="secondary"
-                >
-                  {Astro.locals.t(`resources.card.file.view`)}
-                </LinkButton>
-              )}
-            </div>
+                {content && content.type === 'document' && (
+                  <LinkButton
+                    href={`/${lang}/resources/${id}`}
+                    icon="document"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    {Astro.locals.t(`resources.card.file.view`)}
+                  </LinkButton>
+                )}
+              </div>
+            </footer>
           </Card>
         ))}
       </CardGrid>

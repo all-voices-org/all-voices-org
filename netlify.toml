@@ -13,8 +13,3 @@
     from = "/admin/*"
     to = "/admin/index.html"
     status = 200
-
-# [dev]
-#     command = "npm run dev"
-#     publish = "dist"
-#     port = 8081

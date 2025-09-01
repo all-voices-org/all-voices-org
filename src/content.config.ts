@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content'
-import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders';
-import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
+import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders'
+import { docsSchema, i18nSchema } from '@astrojs/starlight/schema'
 
 export const locales = ['en', 'es', 'fr', 'ar', 'sw', 'ht'] as const
 export type Locale = (typeof locales)[number]
@@ -13,17 +13,38 @@ export const languageNames: Record<Locale, string> = {
   ht: 'Kreyòl ayisyen'
 }
 
+const contentSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.enum(['document']),
+    body: z.string()
+  }),
+  z.object({
+    type: z.enum(['pdf']),
+    description: z.string().optional(),
+    file: z.string()
+  }),
+  z.object({
+    type: z.enum(['video']),
+    description: z.string().optional(),
+    file: z.string()
+  }),
+  z.object({
+    type: z.enum(['link']),
+    url: z.string().url()
+  })
+])
+
+export type ResourceContent = z.infer<typeof contentSchema>
+
 export const resourceSchema = z.object({
   title: z.string().optional(),
-  description: z.string().optional(),
-  type: z.enum(['pdf', 'video', 'youtube-video', 'link']).optional(),
-  file: z.string().optional(), // for pdf
-  url: z.string().url().optional(), // for link
+  summary: z.string().optional(),
+  content: z.array(contentSchema).optional()
 })
 
 const resources = defineCollection({
   type: 'content',
-  schema: resourceSchema
+  schema: resourceSchema.optional()
 })
 
 export const collections = {
@@ -50,7 +71,7 @@ export const collections = {
         'resource.notFound.content': z.string(),
         'resource.notFound.suggestion': z.string(),
         'resource.notFound.linkText': z.string()
-      }),
-    }),
-  }),
+      })
+    })
+  })
 }

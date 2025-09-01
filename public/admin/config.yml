@@ -3,24 +3,15 @@ backend:
   repo: all-voices-org/all-voices-org
   branch: main
 
-local_backend: true
+# local_backend: true
 
 media_folder: 'public/assets/uploads'
 public_folder: '/assets/uploads'
 publish_mode: editorial_workflow
 
 i18n:
-  # Required and can be one of multiple_folders, multiple_files or single_file
-  # multiple_folders - persists files in `<folder>/<locale>/<slug>.<extension>`
-  # multiple_files - persists files in `<folder>/<slug>.<locale>.<extension>`
-  # single_file - persists a single file in `<folder>/<slug>.<extension>`
   structure: multiple_folders
-
-  # Required - a list of locales to show in the editor UI
   locales: [en, es, fr, ar, sw, ht]
-
-  # Optional, defaults to the first item in locales.
-  # The locale to be used for fields validation and as a baseline for the entry.
   default_locale: en
 
 collections:
@@ -39,41 +30,105 @@ collections:
     folder: 'src/content/resources'
     create: true
     i18n: true
-    sortable_fields: []
+    summary: '{{content.0.type}}: {{title}}'
     fields:
-      - { name: 'title', widget: 'string', i18n: true, duplicate: true }
       - {
-          name: 'description',
+          name: 'title',
+          label: 'Resource Title',
           widget: 'string',
-          required: false,
           i18n: true,
           duplicate: true
         }
       - {
-          name: 'type',
-          widget: 'select',
-          options: ['pdf', 'video', 'youtube-video', 'link'],
+          name: 'summary',
+          label: 'Resource Summary',
+          widget: 'text',
           i18n: true,
           duplicate: true
         }
-      - {
-          name: 'file',
-          widget: 'file',
-          required: false,
-          i18n: true,
-          duplicate: true
-        }
-      - {
-          name: 'url',
-          widget: 'string',
-          required: false,
-          i18n: true,
-          duplicate: true
-        }
-      - {
-          name: 'body',
-          widget: 'markdown',
-          required: false,
-          i18n: true,
-          duplicate: true
-        }
+      - name: content
+        label: 'Resource Content'
+        hint: 'Add the content for the resource. Only one item is allowed.'
+        widget: list
+        i18n: true
+        duplicate: true
+        min: 1
+        max: 1
+        required: true
+        collapsed: false
+        types:
+          - name: document
+            label: 'Document'
+            summary: "{{title}} - {{body | truncate(50, '...')}}"
+            widget: object
+            i18n: true
+            duplicate: true
+            fields:
+              - {
+                  name: 'body',
+                  label: 'Body',
+                  widget: 'markdown',
+                  i18n: true,
+                  duplicate: true
+                }
+
+          - name: pdf
+            label: 'PDF File'
+            summary: '{{file}}'
+            widget: object
+            i18n: true
+            duplicate: true
+            fields:
+              - {
+                  name: 'description',
+                  label: 'Description',
+                  widget: 'text',
+                  i18n: true,
+                  duplicate: true,
+                  required: false
+                }
+              - {
+                  name: 'file',
+                  label: 'File Upload',
+                  widget: 'file',
+                  i18n: true,
+                  duplicate: true
+                }
+
+          - name: 'video'
+            label: 'Video File'
+            summary: '{{file}}'
+            widget: object
+            i18n: true
+            duplicate: true
+            fields:
+              - {
+                  name: 'description',
+                  label: 'Description',
+                  widget: 'text',
+                  i18n: true,
+                  duplicate: true,
+                  required: false
+                }
+              - {
+                  name: 'file',
+                  label: 'File Upload',
+                  widget: 'file',
+                  i18n: true,
+                  duplicate: true
+                }
+
+          - name: 'link'
+            label: 'External Link'
+            summary: '{{url}}'
+            widget: object
+            i18n: true
+            duplicate: true
+            fields:
+              - {
+                  name: 'url',
+                  label: 'URL',
+                  widget: 'string',
+                  i18n: true,
+                  duplicate: true
+                }
