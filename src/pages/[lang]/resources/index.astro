@@ -6,7 +6,6 @@ import {
   CardGrid,
   Icon,
   LinkButton,
-  LinkCard
 } from '@astrojs/starlight/components'
 import LanguageBadge from '../../../components/language-badge.astro'
 import { languageNames, locales, type Locale, type ResourceContent } from '../../../content.config'
@@ -154,8 +153,11 @@ const pageProps = {
           {Astro.locals.t('resources.filters.resourceType')}
           <select name="type" onchange="this.form.submit()">
             <option value="" selected={selectedType === ''}>Any Type</option>
+            <option value="document" selected={selectedType === 'document'}
+              >Document</option
+            >
             <option value="pdf" selected={selectedType === 'pdf'}
-              >PDF Document</option
+              >PDF File</option
             >
             <option value="video" selected={selectedType === 'video'}
               >Video</option
