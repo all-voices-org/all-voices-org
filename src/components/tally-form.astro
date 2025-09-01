@@ -11,8 +11,6 @@ url.searchParams.set('alignLeft', '1')
 url.searchParams.set('hideTitle', '1')
 url.searchParams.set('dynamicHeight', '1')
 
-console.log(Astro.props.extraParams)
-
 if (Astro.props.extraParams != null) {
   Object.entries(Astro.props.extraParams).forEach(([key, value]) => {
     if (value != null) {

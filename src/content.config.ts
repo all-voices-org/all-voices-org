@@ -1,47 +1,77 @@
 import { defineCollection, z } from 'astro:content'
-import { docsLoader } from '@astrojs/starlight/loaders'
-import { docsSchema } from '@astrojs/starlight/schema'
+import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders'
+import { docsSchema, i18nSchema } from '@astrojs/starlight/schema'
 
-const locales = ['en', 'es', 'fr', 'ar', 'sw', 'ht'] as const
+export const locales = ['en', 'es', 'fr', 'ar', 'sw', 'ht'] as const
+export type Locale = (typeof locales)[number]
+export const languageNames: Record<Locale, string> = {
+  en: 'English',
+  es: 'Español',
+  fr: 'Français',
+  ar: 'العربية',
+  sw: 'Kiswahili',
+  ht: 'Kreyòl ayisyen'
+}
 
-// Static pages (home/about/etc.)
-const pages = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    lang: z.enum(locales),
-    navOrder: z.number().optional()
+const contentSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.enum(['document']),
+    body: z.string()
+  }),
+  z.object({
+    type: z.enum(['pdf']),
+    description: z.string().optional(),
+    file: z.string()
+  }),
+  z.object({
+    type: z.enum(['video']),
+    description: z.string().optional(),
+    file: z.string()
+  }),
+  z.object({
+    type: z.enum(['link']),
+    url: z.string().url()
   })
+])
+
+export type ResourceContent = z.infer<typeof contentSchema>
+
+export const resourceSchema = z.object({
+  title: z.string().optional(),
+  summary: z.string().optional(),
+  content: z.array(contentSchema).optional()
 })
 
-// ESL resources (library items)
 const resources = defineCollection({
   type: 'content',
-  schema: z
-    .object({
-      title: z.string(),
-      lang: z.enum(locales),
-      proficiency: z.enum(['beginner', 'intermediate', 'advanced']),
-      topics: z.array(z.string()).default([]),
-      type: z.enum(['pdf', 'video', 'link']),
-      fileUrl: z.string().url().optional(), // for pdf
-      videoUrl: z.string().url().optional(), // for video
-      externalUrl: z.string().url().optional(), // for link
-      description: z.string().optional(),
-      source: z.string().optional(),
-      duration: z.string().optional()
-    })
-    .refine(
-      (d) =>
-        (d.type === 'pdf' && !!d.fileUrl) ||
-        (d.type === 'video' && !!d.videoUrl) ||
-        (d.type === 'link' && !!d.externalUrl),
-      { message: 'Provide a URL matching the resource type.' }
-    )
+  schema: resourceSchema.optional()
 })
 
 export const collections = {
   docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
-  pages,
-  resources
+  resources,
+  i18n: defineCollection({
+    loader: i18nLoader(),
+    schema: i18nSchema({
+      extend: z.object({
+        'resources.title': z.string(),
+        'resources.description': z.string(),
+        'resources.filters.title': z.string(),
+        'resources.filters.resourceType': z.string(),
+        'resources.filters.topic': z.string(),
+        'resources.filters.language': z.string(),
+        'resources.emptyState.noResults': z.string(),
+        'resources.emptyState.tryAdjustingFilters': z.string(),
+        'resources.card.file.view': z.string(),
+        'resources.card.file.open': z.string(),
+        'resources.card.file.download': z.string(),
+        'resources.card.url.goTo': z.string(),
+
+        'resource.notFound.title': z.string(),
+        'resource.notFound.content': z.string(),
+        'resource.notFound.suggestion': z.string(),
+        'resource.notFound.linkText': z.string()
+      })
+    })
+  })
 }

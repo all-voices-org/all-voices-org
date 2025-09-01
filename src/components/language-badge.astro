@@ -1,0 +1,72 @@
+---
+import { Badge } from '@astrojs/starlight/components'
+import colors from '@radix-ui/colors'
+import { languageNames, type Locale } from '../content.config'
+
+type Color = {
+  backgroundColor: string
+  color: string
+  borderColor?: string
+}
+
+const palette: Record<string, Color> = {
+  color1: {
+    backgroundColor: colors.blue.blue2,
+    color: colors.blue.blue11,
+    borderColor: colors.blue.blue7
+  },
+  color2: {
+    backgroundColor: colors.tomato.tomato2,
+    color: colors.tomato.tomato11,
+    borderColor: colors.tomato.tomato7
+  },
+  color3: {
+    backgroundColor: colors.teal.teal2,
+    color: colors.teal.teal11,
+    borderColor: colors.teal.teal7
+  },
+  color4: {
+    backgroundColor: colors.purple.purple2,
+    color: colors.purple.purple11,
+    borderColor: colors.purple.purple7
+  },
+  color5: {
+    backgroundColor: colors.orange.orange2,
+    color: colors.orange.orange11,
+    borderColor: colors.orange.orange7
+  },
+  color6: {
+    backgroundColor: colors.pink.pink2,
+    color: colors.pink.pink11,
+    borderColor: colors.pink.pink7
+  }
+}
+
+const languageBadges: Record<string, Color & { name: string }> = {
+  en: { name: languageNames.en, ...palette.color1 },
+  es: { name: languageNames.es, ...palette.color2 },
+  fr: { name: languageNames.fr, ...palette.color3 },
+  ar: { name: languageNames.ar, ...palette.color4 },
+  sw: { name: languageNames.sw, ...palette.color5 },
+  ht: { name: languageNames.ht, ...palette.color6 }
+}
+
+interface Props {
+  lang: Locale
+}
+
+const { lang } = Astro.props
+---
+
+<Badge
+  text={languageBadges[lang]?.name ?? lang}
+  style={{
+    color: `${languageBadges[lang]?.color ?? 'black'}`,
+    'background-color': `${languageBadges[lang]?.backgroundColor ?? 'gray'}`,
+    border: `1px solid ${languageBadges[lang]?.borderColor ?? languageBadges[lang]?.color ?? 'black'}`,
+    'border-radius': '0.5rem',
+    margin: '0.5rem 0',
+    padding: '0.25rem 0.5rem'
+  }}
+  size={'small'}
+/>

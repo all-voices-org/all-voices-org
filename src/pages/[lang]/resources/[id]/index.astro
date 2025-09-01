@@ -1,0 +1,117 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import type { StarlightPageProps } from '@astrojs/starlight/props'
+import { getCollection } from 'astro:content'
+import type { TOptions } from 'i18next'
+import { marked, type MarkedExtension } from 'marked'
+
+interface Props {
+  lang: string
+  id: string
+}
+
+const { lang, id: resourceId } = Astro.params
+
+const allResources = await getCollection('resources', (resource) => {
+  return `${lang}/${resourceId}` === resource.slug
+})
+
+const resource = allResources.at(0)
+
+const pageProps: StarlightPageProps = {
+  frontmatter: {
+    title: resource?.data?.title ?? Astro.locals.t('resource.notFound.title'),
+    template: 'splash',
+    prev: {
+      link: `/${lang}/resources/`,
+      label: Astro.locals.t('resources.title')
+    }
+  },
+  lang: lang,
+}
+
+const content = resource?.data?.content?.at(0)
+
+export const youtubeExtension: MarkedExtension = {
+  extensions: [{
+    name: 'youtube',
+    level: 'block',
+    start(src: string) {
+      const m = src.match(/\{\{<\s*youtube\s+[A-Za-z0-9_-]{6,}\s*>\}\}/);
+      return m ? m.index : undefined;
+    },
+    tokenizer(src: string) {
+      const rule = /^\{\{<\s*youtube\s+([A-Za-z0-9_-]{6,})\s*>\}\}[ \t]*(?:\r?\n|$)/;
+      const match = rule.exec(src);
+      if (match) {
+        const [, id] = match;
+        return {
+          type: 'youtube',
+          raw: match[0],
+          id,
+        } as any;
+      }
+      return;
+    },
+    renderer(token: any) {
+      const id = token.id as string;
+      return (
+        `<div class="yt-embed" data-youtube="${id}">` +
+          `<iframe src="https://www.youtube.com/embed/${id}?si=sU5NH_DgVoueJa5g"` +
+          ` title="YouTube video player"` +
+          ` frameborder="0" ` +
+          ` allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"` +
+          ` referrerpolicy="strict-origin-when-cross-origin"` +
+          ` allowfullscreen` +
+          `></iframe>` +
+        `</div>`
+      );
+    },
+  }],
+}
+
+marked.use(youtubeExtension)
+
+const markdown = content?.type === 'document' ? marked.parse(content?.body) : null
+
+const notFoundSuggestion = Astro.locals.t('resource.notFound.suggestion', {
+  link: `<a href="/${lang}/resources">${Astro.locals.t('resource.notFound.linkText')}</a>`,
+  interpolation: { escapeValue: false }
+} as TOptions)
+---
+
+<StarlightPage {...pageProps}>
+  {(content == null) && (
+    <p>
+      {Astro.locals.t('resource.notFound.content')}
+    </p>
+
+    <p set:html={notFoundSuggestion} />
+  )}
+
+  {content != null && content.type === 'document' && (
+    <article set:html={markdown} />
+  )}
+
+  {content != null && content.type === 'pdf' && (
+    <>
+      {content.description && <p>{content.description}</p>}
+      <embed
+        src={content.file}
+        type="application/pdf"
+        width="100%"
+        height="800px"
+      />
+    </>
+  )}
+
+  {content != null && content.type === 'video' && (
+    <>
+      {content.description && <p>{content.description}</p>}
+      <video
+        src={content.file}
+        controls={true}
+      />
+    </>
+  )}
+</StarlightPage>

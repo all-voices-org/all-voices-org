@@ -1,0 +1,19 @@
+{
+  "resources.title": "الموارد",
+  "resources.description": "ابحث عن موارد ESL ومعلومات محلية بلغتك.",
+  "resources.filters.title": "الفلاتر",
+  "resources.filters.resourceType": "نوع المورد",
+  "resources.filters.topic": "الموضوع",
+  "resources.filters.language": "اللغة",
+  "resources.emptyState.noResults": "لم يتم العثور على موارد.",
+  "resources.emptyState.tryAdjustingFilters": "حاول تعديل الفلاتر أعلاه.",
+  "resources.card.file.view": "عرض",
+  "resources.card.file.open": "فتح",
+  "resources.card.file.download": "تنزيل",
+  "resources.card.url.goTo": "فتح الرابط",
+
+  "resource.notFound.title": "المورد غير موجود",
+  "resource.notFound.content": "المورد الذي تبحث عنه غير موجود. ربما تمت إزالته أو أن الرابط غير صحيح.",
+  "resource.notFound.suggestion": "يرجى التحقق من الرابط أو {{link}}.",
+  "resource.notFound.linkText": "العودة إلى صفحة الموارد"
+}
