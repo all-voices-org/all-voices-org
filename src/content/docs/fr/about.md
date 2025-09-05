@@ -1,5 +1,5 @@
 ---
-title: "À propos d'All Voices"
+title: À propos d'All Voices
 lang: fr
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: 'حول All Voices'
+title: حول All Voices
 lang: ar
 ---
 

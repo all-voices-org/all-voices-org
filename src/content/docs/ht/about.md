@@ -1,5 +1,5 @@
 ---
-title: 'Konsènan All Voices'
+title: Konsènan All Voices
 lang: ht
 ---
 
