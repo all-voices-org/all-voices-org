@@ -1,6 +1,7 @@
 ---
 title: Document With Link, Image and YouTube Video
-summary: This document showcases various media types including links, images, and YouTube videos.
+summary: This document showcases various media types including links, images,
+  and YouTube videos.
 content:
   - type: document
     body: >-
