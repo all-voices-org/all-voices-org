@@ -1,5 +1,5 @@
 ---
-title: 'Kuhusu All Voices'
+title: Kuhusu All Voices
 lang: sw
 ---
 
