@@ -6,6 +6,9 @@
   "resources.filters.topic": "Sujet",
   "resources.filters.language": "Langue",
 
+  "resources.filters.apply": "Appliquer",
+  "resources.filters.reset": "Réinitialiser",
+
   "resources.filters.sort.title": "Trier",
 
   "resources.emptyState.noResults": "Aucune ressource trouvée.",
@@ -18,5 +21,17 @@
   "resource.notFound.title": "Ressource non trouvée",
   "resource.notFound.content": "La ressource que vous recherchez est introuvable. Elle a peut-être été supprimée ou le lien est incorrect.",
   "resource.notFound.suggestion": "Veuillez vérifier l'URL ou {{link}}.",
-  "resource.notFound.linkText": "retourner à la page des ressources"
+  "resource.notFound.linkText": "retourner à la page des ressources",
+
+  "resource.topics.johnson-county-culture": "Culture du Comté de Johnson",
+  "resource.topics.bussing-transportation": "Transport en Autobus",
+  "resource.topics.shopping": "Achats",
+  "resource.topics.health-care": "Soins de Santé",
+  "resource.topics.parent-responsibilities": "Responsabilités Parentales",
+  "resource.topics.adult-responsibilities": "Responsabilités d'Adulte",
+  "resource.topics.work-situations": "Situations de Travail",
+  "resource.topics.ordering-food": "Commander de la Nourriture",
+  "resource.topics.talking-on-the-phone": "Parler au Téléphone",
+  "resource.topics.interviewing": "Entretiens",
+  "resource.topics.meeting-new-people-social-skills": "Rencontrer de Nouvelles Personnes et Compétences Sociales"
 }

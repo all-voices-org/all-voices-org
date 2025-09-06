@@ -36,9 +36,26 @@ const contentSchema = z.discriminatedUnion('type', [
 
 export type ResourceContent = z.infer<typeof contentSchema>
 
+export const resourceTopicSchema = z.enum([
+  'johnson-county-culture',
+  'bussing-transportation',
+  'shopping',
+  'health-care',
+  'parent-responsibilities',
+  'adult-responsibilities',
+  'work-situations',
+  'ordering-food',
+  'talking-on-the-phone',
+  'interviewing',
+  'meeting-new-people-social-skills'
+])
+
+export type ResourceTopic = z.infer<typeof resourceTopicSchema>
+
 export const resourceSchema = z.object({
   title: z.string().optional(),
   summary: z.string().optional(),
+  topics: z.array(resourceTopicSchema).optional().default([]),
   content: z.array(contentSchema).optional()
 })
 
@@ -61,6 +78,9 @@ export const collections = {
         'resources.filters.topic': z.string(),
         'resources.filters.language': z.string(),
 
+        'resources.filters.apply': z.string(),
+        'resources.filters.reset': z.string(),
+
         'resources.filters.sort.title': z.string(),
 
         'resources.emptyState.noResults': z.string(),
@@ -73,7 +93,19 @@ export const collections = {
         'resource.notFound.title': z.string(),
         'resource.notFound.content': z.string(),
         'resource.notFound.suggestion': z.string(),
-        'resource.notFound.linkText': z.string()
+        'resource.notFound.linkText': z.string(),
+
+        'resource.topics.johnson-county-culture': z.string(),
+        'resource.topics.bussing-transportation': z.string(),
+        'resource.topics.shopping': z.string(),
+        'resource.topics.health-care': z.string(),
+        'resource.topics.parent-responsibilities': z.string(),
+        'resource.topics.adult-responsibilities': z.string(),
+        'resource.topics.work-situations': z.string(),
+        'resource.topics.ordering-food': z.string(),
+        'resource.topics.talking-on-the-phone': z.string(),
+        'resource.topics.interviewing': z.string(),
+        'resource.topics.meeting-new-people-social-skills': z.string()
       })
     })
   })

@@ -2,12 +2,7 @@
 import { Badge } from '@astrojs/starlight/components'
 import colors from '@radix-ui/colors'
 import { languageNames, type Locale } from '../content.config'
-
-type Color = {
-  backgroundColor: string
-  color: string
-  borderColor?: string
-}
+import type { Color } from './color'
 
 const palette: Record<string, Color> = {
   color1: {

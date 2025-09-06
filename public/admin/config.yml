@@ -32,20 +32,46 @@ collections:
     i18n: true
     summary: '{{content.0.type}}: {{title}}'
     fields:
-      - {
-          name: 'title',
-          label: 'Resource Title',
-          widget: 'string',
-          i18n: true,
-          duplicate: true
-        }
-      - {
-          name: 'summary',
-          label: 'Resource Summary',
-          widget: 'text',
-          i18n: true,
-          duplicate: true
-        }
+      - name: title
+        label: 'Resource Title'
+        widget: 'string'
+        i18n: true
+        duplicate: true
+
+      - name: summary
+        label: 'Resource Summary'
+        widget: 'text'
+        i18n: true
+        duplicate: true
+
+      - name: topics
+        label: 'Topics'
+        widget: select
+        i18n: true
+        duplicate: true
+        multiple: true
+        options:
+          - { label: 'Johnson County Culture', value: 'johnson-county-culture' }
+          - {
+              label: 'Bussing & Transportation',
+              value: 'bussing-transportation'
+            }
+          - { label: 'Shopping', value: 'shopping' }
+          - { label: 'Health Care', value: 'health-care' }
+          - {
+              label: 'Parent Responsibilities',
+              value: 'parent-responsibilities'
+            }
+          - { label: 'Adult Responsibilities', value: 'adult-responsibilities' }
+          - { label: 'Work Situations', value: 'work-situations' }
+          - { label: 'Ordering food', value: 'ordering-food' }
+          - { label: 'Talking on the Phone', value: 'talking-on-the-phone' }
+          - { label: 'Interviewing', value: 'interviewing' }
+          - {
+              label: 'Meeting New People/Social Skills',
+              value: 'meeting-new-people-social-skills'
+            }
+
       - name: content
         label: 'Resource Content'
         hint: 'Add the content for the resource. Only one item is allowed.'

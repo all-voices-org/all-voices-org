@@ -35,6 +35,9 @@
   "resources.filters.topic": "Mada",
   "resources.filters.language": "Lugha",
 
+  "resources.filters.apply": "Tumia",
+  "resources.filters.reset": "Weka Upya",
+
   "resources.filters.sort.title": "Panga",
 
   "resources.emptyState.noResults": "Hakuna rasilimali zilizopatikana.",
@@ -47,5 +50,17 @@
   "resource.notFound.title": "Rasilimali Haijapatikana",
   "resource.notFound.content": "Rasilimali unayotafuta haijapatikana. Inawezekana imeondolewa au kiungo si sahihi.",
   "resource.notFound.suggestion": "Tafadhali angalia URL au {{link}}.",
-  "resource.notFound.linkText": "rudi kwenye ukurasa wa rasilimali"
+  "resource.notFound.linkText": "rudi kwenye ukurasa wa rasilimali",
+
+  "resource.topics.johnson-county-culture": "Utamaduni wa Kaunti ya Johnson",
+  "resource.topics.bussing-transportation": "Mabasi na Usafiri",
+  "resource.topics.shopping": "Ununuzi",
+  "resource.topics.health-care": "Huduma za Afya",
+  "resource.topics.parent-responsibilities": "Majukumu ya Wazazi",
+  "resource.topics.adult-responsibilities": "Majukumu ya Watu Wazima",
+  "resource.topics.work-situations": "Mazingira ya Kazi",
+  "resource.topics.ordering-food": "Kuagiza Chakula",
+  "resource.topics.talking-on-the-phone": "Kuzungumza Simu",
+  "resource.topics.interviewing": "Mahojiano",
+  "resource.topics.meeting-new-people-social-skills": "Kukutana na Watu Wapya na Ujuzi wa Kijamii"
 }

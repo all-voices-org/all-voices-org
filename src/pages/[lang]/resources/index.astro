@@ -8,7 +8,10 @@ import {
   LinkButton,
 } from '@astrojs/starlight/components'
 import LanguageBadge from '../../../components/language-badge.astro'
-import { languageNames, locales, type Locale, type ResourceContent } from '../../../content.config'
+import { languageNames, locales, resourceTopicSchema, type Locale, type ResourceContent, type ResourceTopic } from '../../../content.config'
+import TopicBadge from '../../../components/topic-badge.astro'
+import TopicSelector from '../../../components/topic-selector.astro'
+import { resourceSchema } from '../../../content.config'
 
 export async function getStaticPaths() {
   return locales.map((lang) => ({
@@ -22,8 +25,16 @@ type SortOrder = z.infer<typeof sortSchema>
 const { lang } = Astro.params
 
 const url = Astro.url
+
 const selectedType = url.searchParams.get('type') ?? ''
+
+const topicsSchema = resourceSchema.shape.topics
+const topics = topicsSchema.safeParse(url.searchParams.getAll('topic') ?? [])
+const selectedTopics = new Set<ResourceTopic>(topics.success ? topics.data : [])
+const allTopics = resourceTopicSchema.options
+
 const selectedLanguage = url.searchParams.get('language') ?? (lang === 'en' ? '' : lang)
+
 const sort = sortSchema.safeParse(url.searchParams.get('sort') ?? 'asc')
 const selectedSort: SortOrder = sort.success ? sort.data : 'asc'
 
@@ -57,6 +68,11 @@ let filteredItems: Resource[] = allResources
     }
 
     if (selectedType && content?.type !== selectedType) {
+      return false
+    }
+
+    const resourceTopics = new Set<ResourceTopic>(resource.data?.topics ?? [])
+    if (selectedTopics.size > 0 && resourceTopics.intersection(selectedTopics).size === 0) {
       return false
     }
 
@@ -127,7 +143,7 @@ const pageProps = {
       flex-wrap: wrap;
       gap: 0.5rem;
       padding-top: 0;
-      padding-bottom: 1.5rem;
+      padding-bottom: 0;
       padding-right: 1.5rem;
       align-items: end;
       margin-top: 0;
@@ -144,6 +160,8 @@ const pageProps = {
       flex: auto;
       margin-top: 0;
       margin-left: 0.5rem;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
     }
 
     .filters select {
@@ -155,6 +173,60 @@ const pageProps = {
       color: var(--sl-color-text);
       font-size: 0.9rem;
       cursor: pointer;
+    }
+
+    .topic-filter {
+      display: flex;
+      flex-direction: column;
+      min-width: 100%;
+      flex: 1 1 100%;
+      margin-top: 0;
+      margin-left: 0.5rem;
+    }
+
+    .topic-filter-label {
+      font-weight: 500;
+      color: var(--sl-color-text);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin: 0;
+      padding-top: 0.5rem;
+      padding-bottom: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .actions .action-button {
+      align-self: flex-start;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--sl-color-hairline);
+      border-radius: 6px;
+      margin: 0;
+      background: var(--sl-color-bg);
+      color: var(--sl-color-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .actions .action-button:hover {
+      background: var(--sl-color-bg-nav);
+      border-color: var(--sl-color-accent);
+    }
+
+    .actions .action-button.default {
+      background: var(--sl-color-text-accent);
+      color: var(--sl-color-text-invert);
+      /* border: 1px solid var(--sl-color-accent); */
+    }
+
+    .actions .action-button.default:hover {
+      background: var(--sl-color-accent);
     }
 
     @media (max-width: 640px) {
@@ -204,8 +276,13 @@ const pageProps = {
 
       <div class="filters">
         <label>
+          {Astro.locals.t('resources.filters.topic')}
+          <TopicSelector allTopics={allTopics} selectedTopics={selectedTopics} />
+        </label>
+        
+        <label>
           {Astro.locals.t('resources.filters.resourceType')}
-          <select name="type" onchange="this.form.submit()">
+          <select name="type">
             <option value="" selected={selectedType === ''}>Any Type</option>
             <option value="document" selected={selectedType === 'document'}
               >Document</option
@@ -224,7 +301,7 @@ const pageProps = {
 
         <label>
           {Astro.locals.t('resources.filters.language')}
-          <select name="language" onchange="this.form.submit()">
+          <select name="language">
             <option value="" selected={selectedLanguage === ''}
               >Any Language</option
             >
@@ -240,6 +317,20 @@ const pageProps = {
             }
           </select>
         </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="action-button default" onclick="form.submit()">
+          {Astro.locals.t('resources.filters.apply')}
+        </button>
+
+        <button
+          type="button"
+          class="action-button"
+          onclick="resetAllFilters()"
+        >
+          {Astro.locals.t('resources.filters.reset')}
+        </button>
       </div>
     </details>
 
@@ -266,6 +357,17 @@ const pageProps = {
         .map(({ id, data, content, lang }) => (
           <Card title={data?.title ?? ''}>
             {lang && <LanguageBadge lang={lang} />}
+
+            <div class="card-separator" />
+
+            {data?.topics && data?.topics.length > 0 && (
+              <div class="card-topics">
+                {data.topics.map((topic) => (
+                  <TopicBadge topic={topic} />
+                ))}
+              </div>
+            )}
+
             {data?.summary && <p class="card-summary">{data.summary}</p>}
 
             <footer class="card-footer">
@@ -331,3 +433,19 @@ const pageProps = {
     )
   }
 </StarlightPage>
+
+<script is:inline>
+  window.resetAllFilters = function () {
+    const form = document.querySelector('form.controls-container')
+    if (form) {
+      const topicCheckboxes = form.querySelectorAll('input[name="topic"]')
+      topicCheckboxes.forEach((checkbox) => {
+        checkbox.checked = false
+      })
+      form.querySelector('select[name="type"]').value = ''
+      form.querySelector('select[name="language"]').value = ''
+
+      form.submit()
+    }
+  }
+</script>

@@ -6,6 +6,9 @@
   "resources.filters.topic": "Topic",
   "resources.filters.language": "Language",
 
+  "resources.filters.apply": "Apply",
+  "resources.filters.reset": "Reset",
+
   "resources.filters.sort.title": "Sort",
 
   "resources.emptyState.noResults": "No resources found.",
@@ -18,5 +21,17 @@
   "resource.notFound.title": "Resource Not Found",
   "resource.notFound.content": "The resource you are looking for is not found. It may have been removed or the link is incorrect.",
   "resource.notFound.suggestion": "Please check the URL or {{link}}.",
-  "resource.notFound.linkText": "return to the resources page"
+  "resource.notFound.linkText": "return to the resources page",
+
+  "resource.topics.johnson-county-culture": "Johnson County Culture",
+  "resource.topics.bussing-transportation": "Bussing & Transportation",
+  "resource.topics.shopping": "Shopping",
+  "resource.topics.health-care": "Health Care",
+  "resource.topics.parent-responsibilities": "Parent Responsibilities",
+  "resource.topics.adult-responsibilities": "Adult Responsibilities",
+  "resource.topics.work-situations": "Work Situations",
+  "resource.topics.ordering-food": "Ordering Food",
+  "resource.topics.talking-on-the-phone": "Talking on the Phone",
+  "resource.topics.interviewing": "Interviewing",
+  "resource.topics.meeting-new-people-social-skills": "Meeting New People & Social Skills"
 }
