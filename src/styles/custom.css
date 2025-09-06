@@ -117,6 +117,19 @@ header {
   margin-top: 1rem;
 }
 
+.card .card-separator {
+  border-top: 1px solid var(--sl-color-accent);
+  margin: 0.5rem 0 0 0;
+  width: 100%;
+}
+
+.card .card-topics {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
 .card .card-actions {
   display: flex;
   gap: 1rem;

@@ -1,6 +1,10 @@
 ---
 title: Some Video File
 summary: This document showcases a video file.
+topics:
+  - johnson-county-culture
+  - parent-responsibilities
+  - shopping
 content:
   - type: video
     description: Optional description for the video file.

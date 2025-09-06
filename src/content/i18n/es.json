@@ -6,6 +6,9 @@
   "resources.filters.topic": "Tema",
   "resources.filters.language": "Idioma",
 
+  "resources.filters.apply": "Aplicar",
+  "resources.filters.reset": "Restablecer",
+
   "resources.filters.sort.title": "Ordenar",
 
   "resources.emptyState.noResults": "No se encontraron recursos.",
@@ -18,5 +21,17 @@
   "resource.notFound.title": "Recurso no encontrado",
   "resource.notFound.content": "El recurso que buscas no se encuentra disponible. Puede que haya sido eliminado o que el enlace sea incorrecto.",
   "resource.notFound.suggestion": "Por favor, verifica la URL o {{link}}.",
-  "resource.notFound.linkText": "volver a la página de recursos"
+  "resource.notFound.linkText": "volver a la página de recursos",
+
+  "resource.topics.johnson-county-culture": "Cultura del Condado de Johnson",
+  "resource.topics.bussing-transportation": "Autobuses y Transporte",
+  "resource.topics.shopping": "Compras",
+  "resource.topics.health-care": "Atención Médica",
+  "resource.topics.parent-responsibilities": "Responsabilidades de los Padres",
+  "resource.topics.adult-responsibilities": "Responsabilidades de Adultos",
+  "resource.topics.work-situations": "Situaciones de Trabajo",
+  "resource.topics.ordering-food": "Ordenar Comida",
+  "resource.topics.talking-on-the-phone": "Hablar por Teléfono",
+  "resource.topics.interviewing": "Entrevistas",
+  "resource.topics.meeting-new-people-social-skills": "Conocer Gente Nueva y Habilidades Sociales"
 }

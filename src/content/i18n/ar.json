@@ -6,6 +6,9 @@
   "resources.filters.topic": "الموضوع",
   "resources.filters.language": "اللغة",
 
+  "resources.filters.apply": "تطبيق",
+  "resources.filters.reset": "إعادة تعيين",
+
   "resources.filters.sort.title": "ترتيب",
 
   "resources.emptyState.noResults": "لم يتم العثور على موارد.",
@@ -18,5 +21,17 @@
   "resource.notFound.title": "المورد غير موجود",
   "resource.notFound.content": "المورد الذي تبحث عنه غير موجود. ربما تمت إزالته أو أن الرابط غير صحيح.",
   "resource.notFound.suggestion": "يرجى التحقق من الرابط أو {{link}}.",
-  "resource.notFound.linkText": "العودة إلى صفحة الموارد"
+  "resource.notFound.linkText": "العودة إلى صفحة الموارد",
+
+  "resource.topics.johnson-county-culture": "ثقافة مقاطعة جونسون",
+  "resource.topics.bussing-transportation": "الحافلات والنقل",
+  "resource.topics.shopping": "التسوق",
+  "resource.topics.health-care": "الرعاية الصحية",
+  "resource.topics.parent-responsibilities": "مسؤوليات الوالدين",
+  "resource.topics.adult-responsibilities": "مسؤوليات البالغين",
+  "resource.topics.work-situations": "أوضاع العمل",
+  "resource.topics.ordering-food": "طلب الطعام",
+  "resource.topics.talking-on-the-phone": "التحدث على الهاتف",
+  "resource.topics.interviewing": "المقابلات",
+  "resource.topics.meeting-new-people-social-skills": "لقاء أشخاص جدد والمهارات الاجتماعية"
 }

@@ -17,6 +17,8 @@ export default defineConfig({
       },
       favicon: './src/assets/logo-mark.png',
       customCss: ['./src/styles/custom.css'],
+      titleDelimiter: '',
+      tableOfContents: false,
       components: {
         PageFrame: './src/components/page-frame.astro'
       },

@@ -35,6 +35,9 @@
   "resources.filters.topic": "Sijè",
   "resources.filters.language": "Lang",
 
+  "resources.filters.apply": "Aplike",
+  "resources.filters.reset": "Remèt",
+
   "resources.filters.sort.title": "Klase",
 
   "resources.emptyState.noResults": "Pa gen okenn resous ki jwenn.",
@@ -47,5 +50,17 @@
   "resource.notFound.title": "Resous Pa Jwenn",
   "resource.notFound.content": "Resous ou ap chèche a pa jwenn. Li ka te retire oswa lyen an pa kòrèk.",
   "resource.notFound.suggestion": "Tanpri tcheke URL la oswa {{link}}.",
-  "resource.notFound.linkText": "retounen sou paj resous yo"
+  "resource.notFound.linkText": "retounen sou paj resous yo",
+
+  "resource.topics.johnson-county-culture": "Kilti Konte Johnson an",
+  "resource.topics.bussing-transportation": "Otobis ak Transpò",
+  "resource.topics.shopping": "Fè Komiisyon",
+  "resource.topics.health-care": "Swen Sante",
+  "resource.topics.parent-responsibilities": "Responsabilite Paran yo",
+  "resource.topics.adult-responsibilities": "Responsabilite Granmoun yo",
+  "resource.topics.work-situations": "Sitiyasyon Travay",
+  "resource.topics.ordering-food": "Kòmande Manje",
+  "resource.topics.talking-on-the-phone": "Pale nan Telefòn",
+  "resource.topics.interviewing": "Entèvyou",
+  "resource.topics.meeting-new-people-social-skills": "Rankontre Nouvo Moun ak Abilite Sosyal"
 }
