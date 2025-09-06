@@ -16,11 +16,16 @@ export async function getStaticPaths() {
   }))
 }
 
+const sortSchema = z.enum(['asc', 'desc'])
+type SortOrder = z.infer<typeof sortSchema>
+
 const { lang } = Astro.params
 
 const url = Astro.url
 const selectedType = url.searchParams.get('type') ?? ''
 const selectedLanguage = url.searchParams.get('language') ?? (lang === 'en' ? '' : lang)
+const sort = sortSchema.safeParse(url.searchParams.get('sort') ?? 'asc')
+const selectedSort: SortOrder = sort.success ? sort.data : 'asc'
 
 const isCriteriaSet = Boolean(selectedType || selectedLanguage)
 
@@ -56,6 +61,15 @@ let filteredItems: Resource[] = allResources
     }
 
     return true
+  }).sort((a, b) => {
+    const titleA = a?.data?.title?.toLowerCase() ?? ''
+    const titleB = b?.data?.title?.toLowerCase() ?? ''
+
+    if (selectedSort === 'asc') {
+      return titleA.localeCompare(titleB)
+    } else {
+      return titleB.localeCompare(titleA)
+    }
   })
 
 const pageProps = {
@@ -74,6 +88,29 @@ const pageProps = {
       background: var(--sl-color-bg-nav);
       border-radius: 0.5rem;
       border: 1px solid var(--sl-color-hairline);
+    }
+
+    .filter-title {
+      flex: 1;
+    }
+
+    .filter-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .sort-toggle-button {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 0;
+      border: 0;
+      border-radius: 6px;
+      background: var(--sl-color-bg-nav);
+      color: var(--sl-color-text);
+      cursor: pointer;
     }
 
     .filters-container summary {
@@ -140,12 +177,29 @@ const pageProps = {
     }
   </style>
 
+  <script is:inline>
+    window.toggleSort = function() {
+      const currentSort = new URLSearchParams(window.location.search).get('sort') ?? 'asc'
+      const newSort = currentSort === 'asc' ? 'desc' : 'asc'
+      
+      const url = new URL(window.location.href)
+      url.searchParams.set('sort', newSort)
+      
+      window.location.href = url.toString()
+    }
+  </script>
+
   <p>{pageProps.frontmatter.description}</p>
 
-  <form>
+  <form class="controls-container">
     <details class="filters-container">
-      <summary>
-        <p>{Astro.locals.t('resources.filters.title')}</p>
+      <summary class="filter-summary">
+        <p class="filter-title">{Astro.locals.t('resources.filters.title')}</p>
+        <button class="sort-toggle-button" type="button" onclick="toggleSort()">
+          <span>{Astro.locals.t('resources.filters.sort.title')}</span>
+          <Icon name={selectedSort === 'asc' ? 'down-arrow' : 'up-arrow'} />
+        </button>
+        <input type="hidden" name="sort" value={selectedSort} />
       </summary>
 
       <div class="filters">
@@ -189,7 +243,7 @@ const pageProps = {
       </div>
     </details>
 
-    <noscript><button type="submit">Apply Filters</button></noscript>
+    <noscript><button type="submit">Apply</button></noscript>
   </form>
 
   {

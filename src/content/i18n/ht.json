@@ -34,6 +34,9 @@
   "resources.filters.resourceType": "Kalite Resous",
   "resources.filters.topic": "Sijè",
   "resources.filters.language": "Lang",
+
+  "resources.filters.sort.title": "Klase",
+
   "resources.emptyState.noResults": "Pa gen okenn resous ki jwenn.",
   "resources.emptyState.tryAdjustingFilters": "Eseye ajiste filtè yo anlè a.",
   "resources.card.file.view": "Gade",

@@ -5,6 +5,9 @@
   "resources.filters.resourceType": "Tipo de recurso",
   "resources.filters.topic": "Tema",
   "resources.filters.language": "Idioma",
+
+  "resources.filters.sort.title": "Ordenar",
+
   "resources.emptyState.noResults": "No se encontraron recursos.",
   "resources.emptyState.tryAdjustingFilters": "Intenta ajustar los filtros de arriba.",
   "resources.card.file.view": "Ver",
