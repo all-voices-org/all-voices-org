@@ -5,6 +5,9 @@
   "resources.filters.resourceType": "نوع المورد",
   "resources.filters.topic": "الموضوع",
   "resources.filters.language": "اللغة",
+
+  "resources.filters.sort.title": "ترتيب",
+
   "resources.emptyState.noResults": "لم يتم العثور على موارد.",
   "resources.emptyState.tryAdjustingFilters": "حاول تعديل الفلاتر أعلاه.",
   "resources.card.file.view": "عرض",

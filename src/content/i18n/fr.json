@@ -5,6 +5,9 @@
   "resources.filters.resourceType": "Type de ressource",
   "resources.filters.topic": "Sujet",
   "resources.filters.language": "Langue",
+
+  "resources.filters.sort.title": "Trier",
+
   "resources.emptyState.noResults": "Aucune ressource trouvée.",
   "resources.emptyState.tryAdjustingFilters": "Essayez de modifier les filtres ci-dessus.",
   "resources.card.file.view": "Voir",

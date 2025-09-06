@@ -34,6 +34,9 @@
   "resources.filters.resourceType": "Aina ya Rasilimali",
   "resources.filters.topic": "Mada",
   "resources.filters.language": "Lugha",
+
+  "resources.filters.sort.title": "Panga",
+
   "resources.emptyState.noResults": "Hakuna rasilimali zilizopatikana.",
   "resources.emptyState.tryAdjustingFilters": "Jaribu kubadilisha vichujio hapo juu.",
   "resources.card.file.view": "Tazama",

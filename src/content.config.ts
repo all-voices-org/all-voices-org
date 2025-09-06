@@ -60,6 +60,9 @@ export const collections = {
         'resources.filters.resourceType': z.string(),
         'resources.filters.topic': z.string(),
         'resources.filters.language': z.string(),
+
+        'resources.filters.sort.title': z.string(),
+
         'resources.emptyState.noResults': z.string(),
         'resources.emptyState.tryAdjustingFilters': z.string(),
         'resources.card.file.view': z.string(),
