@@ -32,6 +32,7 @@
   "resources.description": "Pata rasilimali za ESL na taarifa za eneo lako kwa lugha yako.",
   "resources.filters.title": "Vichujio",
   "resources.filters.resourceType": "Aina ya Rasilimali",
+  "resources.filters.level": "Kiwango",
   "resources.filters.topic": "Mada",
   "resources.filters.language": "Lugha",
 
@@ -62,5 +63,10 @@
   "resource.topics.ordering-food": "Kuagiza Chakula",
   "resource.topics.talking-on-the-phone": "Kuzungumza Simu",
   "resource.topics.interviewing": "Mahojiano",
-  "resource.topics.meeting-new-people-social-skills": "Kukutana na Watu Wapya na Ujuzi wa Kijamii"
+  "resource.topics.meeting-new-people-social-skills": "Kukutana na Watu Wapya na Ujuzi wa Kijamii",
+
+  "resource.levels.any": "Kiwango Chochote",
+  "resource.levels.beginner": "Mwanzo",
+  "resource.levels.intermediate": "Kati",
+  "resource.levels.advanced": "Juu"
 }

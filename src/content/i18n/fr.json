@@ -3,6 +3,7 @@
   "resources.description": "Trouvez des ressources ESL et des informations locales dans votre langue.",
   "resources.filters.title": "Filtres",
   "resources.filters.resourceType": "Type de ressource",
+  "resources.filters.level": "Niveau",
   "resources.filters.topic": "Sujet",
   "resources.filters.language": "Langue",
 
@@ -33,5 +34,10 @@
   "resource.topics.ordering-food": "Commander de la Nourriture",
   "resource.topics.talking-on-the-phone": "Parler au Téléphone",
   "resource.topics.interviewing": "Entretiens",
-  "resource.topics.meeting-new-people-social-skills": "Rencontrer de Nouvelles Personnes et Compétences Sociales"
+  "resource.topics.meeting-new-people-social-skills": "Rencontrer de Nouvelles Personnes et Compétences Sociales",
+
+  "resource.levels.any": "Tout Niveau",
+  "resource.levels.beginner": "Débutant",
+  "resource.levels.intermediate": "Intermédiaire",
+  "resource.levels.advanced": "Avancé"
 }

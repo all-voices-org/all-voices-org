@@ -1,0 +1,101 @@
+---
+import { Card } from '@astrojs/starlight/components'
+import colors from '@radix-ui/colors'
+import type { ResourceProficiencyLevel } from '../content.config'
+
+export interface Props {
+  title: string
+  proficiencyLevel?: ResourceProficiencyLevel
+  [key: string]: any
+}
+
+const { title, proficiencyLevel = 'beginner', ...cardProps } = Astro.props
+
+const proficiencyStyles = {
+  beginner: {
+    tagColor: colors.green.green8,
+    tagText: colors.green.green3
+  },
+  intermediate: {
+    tagColor: colors.blue.blue8,
+    tagText: colors.blue.blue3
+  },
+  advanced: {
+    tagColor: colors.purple.purple8,
+    tagText: colors.purple.purple3
+  }
+}
+
+const currentStyle = proficiencyStyles[proficiencyLevel]
+---
+
+<div class="proficiency-card-wrapper" data-proficiency={proficiencyLevel}>
+  <Card title={title} {...cardProps}>
+    <div class="proficiency-corner-tag" data-level={proficiencyLevel}>
+      {Astro.locals.t(`resource.levels.${proficiencyLevel}`)}
+    </div>
+    <slot />
+  </Card>
+</div>
+
+<style
+  define:vars={{
+    tagColor: currentStyle.tagColor,
+    tagText: currentStyle.tagText
+  }}
+>
+  .proficiency-card-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proficiency-card-wrapper :global(.card) {
+    position: relative;
+    overflow: visible;
+  }
+
+  .proficiency-corner-tag {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: var(--tagColor);
+    color: var(--tagText);
+    padding: 0.1rem 1rem 0.2rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    border-radius: 0 8px 0 20px;
+    z-index: 10;
+  }
+
+  .proficiency-card-wrapper :global(.card) {
+    height: 100%;
+    padding-top: 2rem;
+    background-color: hsl(from var(--tagColor) h s l / 0.1);
+    border-color: hsl(from var(--tagColor) h s l / 0.5);
+  }
+
+  .proficiency-card-wrapper :global(.card .card-separator) {
+    border-color: hsl(from var(--tagColor) h s l / 0.5);
+  }
+
+  .proficiency-card-wrapper
+    :global(.card .card-actions .sl-link-button.secondary) {
+    border-color: var(--tagColor);
+  }
+
+  .proficiency-card-wrapper :global(.card .language-badge) {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    /* padding: 0.1rem 1rem 0.2rem 1.25rem !important; */
+    padding-left: 1rem !important;
+    padding-right: 1.25rem !important;
+    margin: 0 !important;
+    border-radius: 8px 0 20px 0 !important;
+  }
+
+  .proficiency-card-wrapper :global(.card .title) {
+    padding-top: 0.5rem;
+  }
+</style>

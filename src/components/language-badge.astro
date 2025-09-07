@@ -54,6 +54,7 @@ const { lang } = Astro.props
 ---
 
 <Badge
+  class="language-badge"
   text={languageBadges[lang]?.name ?? lang}
   style={{
     color: `${languageBadges[lang]?.color ?? 'black'}`,

@@ -32,6 +32,7 @@
   "resources.description": "Jwenn resous ESL ak enfòmasyon lokal nan lang ou.",
   "resources.filters.title": "Filtre",
   "resources.filters.resourceType": "Kalite Resous",
+  "resources.filters.level": "Nivo",
   "resources.filters.topic": "Sijè",
   "resources.filters.language": "Lang",
 
@@ -62,5 +63,10 @@
   "resource.topics.ordering-food": "Kòmande Manje",
   "resource.topics.talking-on-the-phone": "Pale nan Telefòn",
   "resource.topics.interviewing": "Entèvyou",
-  "resource.topics.meeting-new-people-social-skills": "Rankontre Nouvo Moun ak Abilite Sosyal"
+  "resource.topics.meeting-new-people-social-skills": "Rankontre Nouvo Moun ak Abilite Sosyal",
+
+  "resource.levels.any": "Nenpòt Nivo",
+  "resource.levels.beginner": "Kòmanse",
+  "resource.levels.intermediate": "Entèmedyè",
+  "resource.levels.advanced": "Avanse"
 }
