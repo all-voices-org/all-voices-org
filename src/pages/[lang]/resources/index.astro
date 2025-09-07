@@ -477,4 +477,19 @@ const pageProps = {
       form.submit()
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const topicLabels = document.querySelectorAll('.filters label')
+    topicLabels.forEach(label => {
+      const topicSelector = label.querySelector('.topic-selector')
+      const topicsGrid = label.querySelector('.topic-grid')
+      if (topicSelector) {
+        label.addEventListener('click', function(event) {
+          if (event.target === label || event.target === topicSelector || event.target === topicsGrid) {
+            event.preventDefault()
+          }
+        })
+      }
+    })
+  })
 </script>
