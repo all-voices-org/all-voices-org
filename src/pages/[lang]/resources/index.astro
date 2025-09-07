@@ -43,7 +43,12 @@ const selectedLanguage = url.searchParams.get('language') ?? (lang === 'en' ? ''
 const sort = sortSchema.safeParse(url.searchParams.get('sort') ?? 'asc')
 const selectedSort: SortOrder = sort.success ? sort.data : 'asc'
 
-const isCriteriaSet = Boolean(selectedType || selectedLanguage)
+const isCriteriaSet = Boolean(
+  selectedLanguage ||
+  selectedType ||
+  selectedLevel ||
+  selectedTopics.size > 0
+)
 
 const allResources = await getCollection('resources', (resource) => {
   return resource.data != null && resource.data.title != null
