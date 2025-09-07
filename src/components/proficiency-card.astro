@@ -86,13 +86,16 @@ const currentStyle = proficiencyStyles[proficiencyLevel]
 
   .proficiency-card-wrapper :global(.card .language-badge) {
     position: absolute;
-    top: -1px;
-    left: -1px;
-    /* padding: 0.1rem 1rem 0.2rem 1.25rem !important; */
+    top: 0px;
+    left: 0px;
     padding-left: 1rem !important;
     padding-right: 1.25rem !important;
     margin: 0 !important;
     border-radius: 8px 0 20px 0 !important;
+    border-top: none !important;
+    border-left: none !important;
+    z-index: 10 !important;
+    border-color: hsl(from var(--tagColor) h s l / 0.5) !important;
   }
 
   .proficiency-card-wrapper :global(.card .title) {
