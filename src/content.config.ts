@@ -34,7 +34,7 @@ const contentSchema = z.discriminatedUnion('type', [
   })
 ])
 
-export type ResourceContent = z.infer<typeof contentSchema>
+export const resourceProficiencyLevelSchema = z.enum(['beginner', 'intermediate', 'advanced'])
 
 export const resourceTopicSchema = z.enum([
   'johnson-county-culture',
@@ -50,11 +50,14 @@ export const resourceTopicSchema = z.enum([
   'meeting-new-people-social-skills'
 ])
 
+export type ResourceContent = z.infer<typeof contentSchema>
+export type ResourceProficiencyLevel = z.infer<typeof resourceProficiencyLevelSchema>
 export type ResourceTopic = z.infer<typeof resourceTopicSchema>
 
 export const resourceSchema = z.object({
   title: z.string().optional(),
   summary: z.string().optional(),
+  level: resourceProficiencyLevelSchema.default('beginner'),
   topics: z.array(resourceTopicSchema).optional().default([]),
   content: z.array(contentSchema).optional()
 })
@@ -75,6 +78,7 @@ export const collections = {
         'resources.description': z.string(),
         'resources.filters.title': z.string(),
         'resources.filters.resourceType': z.string(),
+        'resources.filters.level': z.string(),
         'resources.filters.topic': z.string(),
         'resources.filters.language': z.string(),
 
@@ -105,7 +109,12 @@ export const collections = {
         'resource.topics.ordering-food': z.string(),
         'resource.topics.talking-on-the-phone': z.string(),
         'resource.topics.interviewing': z.string(),
-        'resource.topics.meeting-new-people-social-skills': z.string()
+        'resource.topics.meeting-new-people-social-skills': z.string(),
+
+        'resource.levels.any': z.string(),
+        'resource.levels.beginner': z.string(),
+        'resource.levels.intermediate': z.string(),
+        'resource.levels.advanced': z.string()
       })
     })
   })

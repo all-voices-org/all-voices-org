@@ -44,6 +44,16 @@ collections:
         i18n: true
         duplicate: true
 
+      - name: level
+        label: 'Proficiency Level'
+        widget: 'select'
+        i18n: true
+        duplicate: true
+        options:
+          - { label: 'Beginner', value: 'beginner' }
+          - { label: 'Intermediate', value: 'intermediate' }
+          - { label: 'Advanced', value: 'advanced' }
+
       - name: topics
         label: 'Topics'
         widget: select

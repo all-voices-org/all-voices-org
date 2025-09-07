@@ -8,7 +8,8 @@ import {
   LinkButton,
 } from '@astrojs/starlight/components'
 import LanguageBadge from '../../../components/language-badge.astro'
-import { languageNames, locales, resourceTopicSchema, type Locale, type ResourceContent, type ResourceTopic } from '../../../content.config'
+import ProficiencyCard from '../../../components/proficiency-card.astro'
+import { languageNames, locales, resourceTopicSchema, resourceProficiencyLevelSchema, type Locale, type ResourceContent, type ResourceTopic } from '../../../content.config'
 import TopicBadge from '../../../components/topic-badge.astro'
 import TopicSelector from '../../../components/topic-selector.astro'
 import { resourceSchema } from '../../../content.config'
@@ -33,12 +34,21 @@ const topics = topicsSchema.safeParse(url.searchParams.getAll('topic') ?? [])
 const selectedTopics = new Set<ResourceTopic>(topics.success ? topics.data : [])
 const allTopics = resourceTopicSchema.options
 
+const level = resourceProficiencyLevelSchema.safeParse(url.searchParams.get('level') ?? '')
+const selectedLevel = level.success ? level.data : ''
+const allLevels = resourceProficiencyLevelSchema.options
+
 const selectedLanguage = url.searchParams.get('language') ?? (lang === 'en' ? '' : lang)
 
 const sort = sortSchema.safeParse(url.searchParams.get('sort') ?? 'asc')
 const selectedSort: SortOrder = sort.success ? sort.data : 'asc'
 
-const isCriteriaSet = Boolean(selectedType || selectedLanguage)
+const isCriteriaSet = Boolean(
+  selectedLanguage ||
+  selectedType ||
+  selectedLevel ||
+  selectedTopics.size > 0
+)
 
 const allResources = await getCollection('resources', (resource) => {
   return resource.data != null && resource.data.title != null
@@ -71,6 +81,10 @@ let filteredItems: Resource[] = allResources
       return false
     }
 
+    if (selectedLevel && resource.data?.level !== selectedLevel) {
+      return false
+    }
+
     const resourceTopics = new Set<ResourceTopic>(resource.data?.topics ?? [])
     if (selectedTopics.size > 0 && resourceTopics.intersection(selectedTopics).size === 0) {
       return false
@@ -100,7 +114,7 @@ const pageProps = {
 <StarlightPage {...pageProps}>
   <style>
     .filters-container {
-      padding-left: 0.5rem;
+      padding-left: 1rem;
       background: var(--sl-color-bg-nav);
       border-radius: 0.5rem;
       border: 1px solid var(--sl-color-hairline);
@@ -222,7 +236,6 @@ const pageProps = {
     .actions .action-button.default {
       background: var(--sl-color-text-accent);
       color: var(--sl-color-text-invert);
-      /* border: 1px solid var(--sl-color-accent); */
     }
 
     .actions .action-button.default:hover {
@@ -280,6 +293,21 @@ const pageProps = {
           <TopicSelector allTopics={allTopics} selectedTopics={selectedTopics} />
         </label>
         
+        <label>
+          {Astro.locals.t('resources.filters.level')}
+          <select name="level">
+            <option value="" selected={selectedType === ''}>{Astro.locals.t('resource.levels.any')}</option>
+            {allLevels.map((level) => (
+              <option
+                value={level}
+                selected={selectedLevel === level}
+              >
+                {Astro.locals.t(`resource.levels.${level}`)}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <label>
           {Astro.locals.t('resources.filters.resourceType')}
           <select name="type">
@@ -355,7 +383,7 @@ const pageProps = {
       <CardGrid>
         {filteredItems
         .map(({ id, data, content, lang }) => (
-          <Card title={data?.title ?? ''}>
+          <ProficiencyCard title={data?.title ?? ''} proficiencyLevel={data?.level}>
             {lang && <LanguageBadge lang={lang} />}
 
             <div class="card-separator" />
@@ -427,7 +455,7 @@ const pageProps = {
                 )}
               </div>
             </footer>
-          </Card>
+          </ProficiencyCard>
         ))}
       </CardGrid>
     )
@@ -442,10 +470,26 @@ const pageProps = {
       topicCheckboxes.forEach((checkbox) => {
         checkbox.checked = false
       })
+      form.querySelector('select[name="level"]').value = ''
       form.querySelector('select[name="type"]').value = ''
       form.querySelector('select[name="language"]').value = ''
 
       form.submit()
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const topicLabels = document.querySelectorAll('.filters label')
+    topicLabels.forEach(label => {
+      const topicSelector = label.querySelector('.topic-selector')
+      const topicsGrid = label.querySelector('.topic-grid')
+      if (topicSelector) {
+        label.addEventListener('click', function(event) {
+          if (event.target === label || event.target === topicSelector || event.target === topicsGrid) {
+            event.preventDefault()
+          }
+        })
+      }
+    })
+  })
 </script>

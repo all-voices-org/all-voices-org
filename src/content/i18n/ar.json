@@ -3,6 +3,7 @@
   "resources.description": "ابحث عن موارد ESL ومعلومات محلية بلغتك.",
   "resources.filters.title": "الفلاتر",
   "resources.filters.resourceType": "نوع المورد",
+  "resources.filters.level": "المستوى",
   "resources.filters.topic": "الموضوع",
   "resources.filters.language": "اللغة",
 
@@ -33,5 +34,10 @@
   "resource.topics.ordering-food": "طلب الطعام",
   "resource.topics.talking-on-the-phone": "التحدث على الهاتف",
   "resource.topics.interviewing": "المقابلات",
-  "resource.topics.meeting-new-people-social-skills": "لقاء أشخاص جدد والمهارات الاجتماعية"
+  "resource.topics.meeting-new-people-social-skills": "لقاء أشخاص جدد والمهارات الاجتماعية",
+
+  "resource.levels.any": "أي مستوى",
+  "resource.levels.beginner": "مبتدئ",
+  "resource.levels.intermediate": "متوسط",
+  "resource.levels.advanced": "متقدم"
 }
