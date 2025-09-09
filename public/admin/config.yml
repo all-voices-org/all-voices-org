@@ -30,13 +30,33 @@ collections:
     folder: 'src/content/resources'
     create: true
     i18n: true
-    summary: '{{content.0.type}}: {{title}}'
+    sortable_fields: ['title', 'type', 'level']
+    summary: '[{{level}}] {{type}}: {{title}} ({{content.0.type}})'
     fields:
       - name: title
         label: 'Resource Title'
         widget: 'string'
         i18n: true
         duplicate: true
+
+      - name: type
+        label: 'Resource Type'
+        widget: 'select'
+        i18n: true
+        duplicate: true
+        options:
+          - {
+              label: 'Vocabulary Builder Worksheet',
+              value: 'vocabulary-builder-worksheet'
+            }
+          - {
+              label: 'Reading and Comprehension Check',
+              value: 'reading-comprehension-check'
+            }
+          - { label: 'Writing Prompts', value: 'writing-prompts' }
+          - { label: 'Conversation Templates', value: 'conversation-templates' }
+          - { label: 'Video', value: 'video' }
+          - { label: 'Conversation Cards', value: 'conversation-cards' }
 
       - name: summary
         label: 'Resource Summary'

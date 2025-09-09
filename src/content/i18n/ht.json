@@ -53,6 +53,14 @@
   "resource.notFound.suggestion": "Tanpri tcheke URL la oswa {{link}}.",
   "resource.notFound.linkText": "retounen sou paj resous yo",
 
+  "resource.types.any": "Nenpòt Kalite",
+  "resource.types.vocabulary-builder-worksheet": "Fèy Travay Konstwi Vokabilè",
+  "resource.types.reading-comprehension-check": "Kontwòl Lekti ak Konpreyansyon",
+  "resource.types.writing-prompts": "Enstruksyon Ekriti",
+  "resource.types.conversation-templates": "Modèl Konvèsasyon",
+  "resource.types.video": "Videyo",
+  "resource.types.conversation-cards": "Kat Konvèsasyon",
+
   "resource.topics.johnson-county-culture": "Kilti Konte Johnson an",
   "resource.topics.bussing-transportation": "Otobis ak Transpò",
   "resource.topics.shopping": "Fè Komiisyon",
@@ -68,5 +76,7 @@
   "resource.levels.any": "Nenpòt Nivo",
   "resource.levels.beginner": "Kòmanse",
   "resource.levels.intermediate": "Entèmedyè",
-  "resource.levels.advanced": "Avanse"
+  "resource.levels.advanced": "Avanse",
+
+  "resource.languages.any": "Nenpòt Lang"
 }

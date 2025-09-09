@@ -53,6 +53,14 @@
   "resource.notFound.suggestion": "Tafadhali angalia URL au {{link}}.",
   "resource.notFound.linkText": "rudi kwenye ukurasa wa rasilimali",
 
+  "resource.types.any": "Aina Yoyote",
+  "resource.types.vocabulary-builder-worksheet": "Karatasi ya Kazi ya Kujenga Msamiati",
+  "resource.types.reading-comprehension-check": "Ukaguzi wa Kusoma na Ufahamu",
+  "resource.types.writing-prompts": "Vidokezo vya Uandishi",
+  "resource.types.conversation-templates": "Violezo vya Mazungumzo",
+  "resource.types.video": "Video",
+  "resource.types.conversation-cards": "Kadi za Mazungumzo",
+
   "resource.topics.johnson-county-culture": "Utamaduni wa Kaunti ya Johnson",
   "resource.topics.bussing-transportation": "Mabasi na Usafiri",
   "resource.topics.shopping": "Ununuzi",
@@ -68,5 +76,7 @@
   "resource.levels.any": "Kiwango Chochote",
   "resource.levels.beginner": "Mwanzo",
   "resource.levels.intermediate": "Kati",
-  "resource.levels.advanced": "Juu"
+  "resource.levels.advanced": "Juu",
+
+  "resource.languages.any": "Lugha Yoyote"
 }

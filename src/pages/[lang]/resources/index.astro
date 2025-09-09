@@ -9,7 +9,7 @@ import {
 } from '@astrojs/starlight/components'
 import LanguageBadge from '../../../components/language-badge.astro'
 import ProficiencyCard from '../../../components/proficiency-card.astro'
-import { languageNames, locales, resourceTopicSchema, resourceProficiencyLevelSchema, type Locale, type ResourceContent, type ResourceTopic } from '../../../content.config'
+import { languageNames, locales, resourceTopicSchema, resourceProficiencyLevelSchema, type Locale, type ResourceContent, type ResourceTopic, resourceTypeSchema } from '../../../content.config'
 import TopicBadge from '../../../components/topic-badge.astro'
 import TopicSelector from '../../../components/topic-selector.astro'
 import { resourceSchema } from '../../../content.config'
@@ -27,7 +27,10 @@ const { lang } = Astro.params
 
 const url = Astro.url
 
-const selectedType = url.searchParams.get('type') ?? ''
+const typeSchema = resourceSchema.shape.type
+const type = typeSchema.safeParse(url.searchParams.get('type') ?? '')
+const selectedType = type.success ? type.data : ''
+const allTypes = resourceTypeSchema.options
 
 const topicsSchema = resourceSchema.shape.topics
 const topics = topicsSchema.safeParse(url.searchParams.getAll('topic') ?? [])
@@ -71,13 +74,13 @@ let filteredItems: Resource[] = allResources
     }
   })
   .filter((resource) => {
-    const { lang, content } = resource
+    const { lang } = resource
 
     if (selectedLanguage && lang !== selectedLanguage) {
       return false
     }
 
-    if (selectedType && content?.type !== selectedType) {
+    if (selectedType && resource.data?.type !== selectedType) {
       return false
     }
 
@@ -311,28 +314,26 @@ const pageProps = {
         <label>
           {Astro.locals.t('resources.filters.resourceType')}
           <select name="type">
-            <option value="" selected={selectedType === ''}>Any Type</option>
-            <option value="document" selected={selectedType === 'document'}
-              >Document</option
-            >
-            <option value="pdf" selected={selectedType === 'pdf'}
-              >PDF File</option
-            >
-            <option value="video" selected={selectedType === 'video'}
-              >Video</option
-            >
-            <option value="link" selected={selectedType === 'link'}
-              >Website Link</option
-            >
+            <option value="" selected={selectedType === ''}>
+              {Astro.locals.t('resource.types.any')}
+            </option>
+            {allTypes.map((type) => (
+              <option
+                value={type}
+                selected={selectedType === type}
+              >
+                {Astro.locals.t(`resource.types.${type}`)}
+              </option>
+            ))}
           </select>
         </label>
 
         <label>
           {Astro.locals.t('resources.filters.language')}
           <select name="language">
-            <option value="" selected={selectedLanguage === ''}
-              >Any Language</option
-            >
+            <option value="" selected={selectedLanguage === ''}>
+              {Astro.locals.t('resource.languages.any')}
+            </option>
             {
               locales.map((language) => (
                 <option
@@ -385,6 +386,10 @@ const pageProps = {
         .map(({ id, data, content, lang }) => (
           <ProficiencyCard title={data?.title ?? ''} proficiencyLevel={data?.level}>
             {lang && <LanguageBadge lang={lang} />}
+
+            {data?.type && (
+              <span class="card-resource-type">{Astro.locals.t(`resource.types.${data?.type}`)}</span>
+            )}
 
             <div class="card-separator" />
 

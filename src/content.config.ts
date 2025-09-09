@@ -38,6 +38,15 @@ const contentSchema = z.discriminatedUnion('type', [
 
 // -- Resources for learners
 
+export const resourceTypeSchema = z.enum([
+  'vocabulary-builder-worksheet',
+  'reading-comprehension-check',
+  'writing-prompts',
+  'conversation-templates',
+  'video',
+  'conversation-cards'
+])
+
 export const resourceProficiencyLevelSchema = z.enum(['beginner', 'intermediate', 'advanced'])
 
 export const resourceTopicSchema = z.enum([
@@ -60,6 +69,7 @@ export type ResourceTopic = z.infer<typeof resourceTopicSchema>
 
 export const resourceSchema = z.object({
   title: z.string().optional(),
+  type: resourceTypeSchema.optional(),
   summary: z.string().optional(),
   level: resourceProficiencyLevelSchema.default('beginner'),
   topics: z.array(resourceTopicSchema).optional().default([]),
@@ -128,6 +138,14 @@ export const collections = {
         'resource.notFound.suggestion': z.string(),
         'resource.notFound.linkText': z.string(),
 
+        'resource.types.any': z.string(),
+        'resource.types.vocabulary-builder-worksheet': z.string(),
+        'resource.types.reading-comprehension-check': z.string(),
+        'resource.types.writing-prompts': z.string(),
+        'resource.types.conversation-templates': z.string(),
+        'resource.types.video': z.string(),
+        'resource.types.conversation-cards': z.string(),
+
         'resource.topics.johnson-county-culture': z.string(),
         'resource.topics.bussing-transportation': z.string(),
         'resource.topics.shopping': z.string(),
@@ -143,7 +161,9 @@ export const collections = {
         'resource.levels.any': z.string(),
         'resource.levels.beginner': z.string(),
         'resource.levels.intermediate': z.string(),
-        'resource.levels.advanced': z.string()
+        'resource.levels.advanced': z.string(),
+
+        'resource.languages.any': z.string(),
       })
     })
   })

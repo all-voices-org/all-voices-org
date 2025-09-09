@@ -24,6 +24,14 @@
   "resource.notFound.suggestion": "Please check the URL or {{link}}.",
   "resource.notFound.linkText": "return to the resources page",
 
+  "resource.types.any": "Any Type",
+  "resource.types.vocabulary-builder-worksheet": "Vocabulary Builder Worksheet",
+  "resource.types.reading-comprehension-check": "Reading and Comprehension Check",
+  "resource.types.writing-prompts": "Writing Prompts",
+  "resource.types.conversation-templates": "Conversation Templates",
+  "resource.types.video": "Video",
+  "resource.types.conversation-cards": "Conversation Cards",
+
   "resource.topics.johnson-county-culture": "Johnson County Culture",
   "resource.topics.bussing-transportation": "Bussing & Transportation",
   "resource.topics.shopping": "Shopping",
@@ -39,5 +47,7 @@
   "resource.levels.any": "Any Level",
   "resource.levels.beginner": "Beginner",
   "resource.levels.intermediate": "Intermediate",
-  "resource.levels.advanced": "Advanced"
+  "resource.levels.advanced": "Advanced",
+
+  "resource.languages.any": "Any Language"
 }
