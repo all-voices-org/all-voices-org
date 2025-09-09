@@ -20,7 +20,8 @@ export default defineConfig({
       titleDelimiter: '',
       tableOfContents: false,
       components: {
-        PageFrame: './src/components/page-frame.astro'
+        PageFrame: './src/components/page-frame.astro',
+        FallbackContentNotice: './src/components/empty.astro'
       },
       defaultLocale: 'en',
       locales: {
