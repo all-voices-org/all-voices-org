@@ -77,11 +77,27 @@ export default defineConfig({
               }
             }
           ]
+        },
+        {
+          label: 'ESL Resources',
+          items: [
+            {
+              label: 'New to English Tutoring?',
+              link: '/new-to-english-tutoring'
+            },
+            {
+              label: 'Become a Volunteer',
+              link: '/volunteer'
+            },
+            {
+              label: 'Browse All ESL Resources',
+              link: '/esl-resources'
+            }
+          ]
         }
       ]
     })
   ],
 
-  // adapter: netlify({ edgeMiddleware: false })
   adapter: netlify()
 })

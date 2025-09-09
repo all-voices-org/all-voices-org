@@ -1,0 +1,437 @@
+---
+import { getCollection, type CollectionEntry, z } from 'astro:content'
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import {
+  Card,
+  CardGrid,
+  Icon,
+  LinkButton,
+} from '@astrojs/starlight/components'
+import LanguageBadge from '../../../components/language-badge.astro'
+import EslTopicBadge from '../../../components/esl-topic-badge.astro'
+import EslTopicSelector from '../../../components/esl-topic-selector.astro'
+import { eslResourceSchema, eslResourceTopicSchema, locales, type EslResourceTopic, type ResourceContent } from '../../../content.config'
+
+export async function getStaticPaths() {
+  return locales.map((lang) => ({
+    params: { lang }
+  }))
+}
+
+const sortSchema = z.enum(['asc', 'desc'])
+type SortOrder = z.infer<typeof sortSchema>
+
+const lang = 'en'
+
+const url = Astro.url
+
+const selectedType = url.searchParams.get('type') ?? ''
+
+const topicsSchema = eslResourceSchema.shape.topics
+const topics = topicsSchema.safeParse(url.searchParams.getAll('topic') ?? [])
+const selectedTopics = new Set<EslResourceTopic>(topics.success ? topics.data : [])
+const allTopics = eslResourceTopicSchema.options
+
+const sort = sortSchema.safeParse(url.searchParams.get('sort') ?? 'asc')
+const selectedSort: SortOrder = sort.success ? sort.data : 'asc'
+
+const isCriteriaSet = Boolean(selectedType || selectedTopics.size > 0)
+
+const allResources = await getCollection('esl-resources', (resource) => {
+  return resource.data != null && resource.data.title != null
+})
+
+type EslResource = CollectionEntry<'esl-resources'> & {
+  content: ResourceContent
+}
+
+let filteredItems: EslResource[] = allResources
+  .map((item) => {
+    return {
+      ...item,
+      content: item.data?.content?.at(0) as ResourceContent,
+      id: item.slug
+    }
+  })
+  .filter((resource) => {
+    const { content } = resource
+
+    if (selectedType && content?.type !== selectedType) {
+      return false
+    }
+
+    const resourceTopics = new Set<EslResourceTopic>(resource.data?.topics ?? [])
+    if (selectedTopics.size > 0 && resourceTopics.intersection(selectedTopics).size === 0) {
+      return false
+    }
+
+    return true
+  }).sort((a, b) => {
+    const titleA = a?.data?.title?.toLowerCase() ?? ''
+    const titleB = b?.data?.title?.toLowerCase() ?? ''
+
+    if (selectedSort === 'asc') {
+      return titleA.localeCompare(titleB)
+    } else {
+      return titleB.localeCompare(titleA)
+    }
+  })
+
+const pageProps = {
+  frontmatter: {
+    title: 'ESL Resources',
+    description: 'A collection of resources for English as a Second Language (ESL) teachers.',
+  },
+  lang: lang
+}
+---
+
+<StarlightPage {...pageProps}>
+  <style>
+    .filters-container {
+      padding-left: 1rem;
+      background: var(--sl-color-bg-nav);
+      border-radius: 0.5rem;
+      border: 1px solid var(--sl-color-hairline);
+    }
+
+    .filter-title {
+      flex: 1;
+    }
+
+    .filter-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .sort-toggle-button {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 0;
+      border: 0;
+      border-radius: 6px;
+      background: var(--sl-color-bg-nav);
+      color: var(--sl-color-text);
+      cursor: pointer;
+    }
+
+    .filters-container summary {
+      padding: 0.5rem;
+      margin: 0;
+    }
+
+    .filters-container summary::before {
+      color: var(--sl-icon-color);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 1.5rem;
+      align-items: end;
+      margin-top: 0;
+      margin-left: 0.5rem;
+    }
+
+    .filters label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 500;
+      color: var(--sl-color-text);
+      font-size: 0.9rem;
+      min-width: 160px;
+      flex: auto;
+      margin-top: 0;
+      margin-left: 0.5rem;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+      align-self: self-start;
+    }
+
+    .filters select {
+      padding: 0.5rem;
+      margin-left: -0.5rem;
+      border: 1px solid var(--sl-color-hairline);
+      border-radius: 6px;
+      background: var(--sl-color-bg);
+      color: var(--sl-color-text);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .topic-filter {
+      display: flex;
+      flex-direction: column;
+      min-width: 100%;
+      flex: 1 1 100%;
+      margin-top: 0;
+      margin-left: 0.5rem;
+    }
+
+    .topic-filter-label {
+      font-weight: 500;
+      color: var(--sl-color-text);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin: 0;
+      padding-top: 0.5rem;
+      padding-bottom: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .actions .action-button {
+      align-self: flex-start;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--sl-color-hairline);
+      border-radius: 6px;
+      margin: 0;
+      background: var(--sl-color-bg);
+      color: var(--sl-color-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .actions .action-button:hover {
+      background: var(--sl-color-bg-nav);
+      border-color: var(--sl-color-accent);
+    }
+
+    .actions .action-button.default {
+      background: var(--sl-color-text-accent);
+      color: var(--sl-color-text-invert);
+    }
+
+    .actions .action-button.default:hover {
+      background: var(--sl-color-accent);
+    }
+
+    :global(.card .title) {
+      padding-bottom: 0.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .empty-state {
+      flex-direction: row;
+      flex: content;
+      text-align: center;
+      align-self: center;
+      justify-self: center;
+      justify-items: center;
+      padding: 2rem;
+      color: var(--sl-color-text);
+      font-size: 1.1rem;
+    }
+  </style>
+
+  <script is:inline>
+    window.toggleSort = function() {
+      const currentSort = new URLSearchParams(window.location.search).get('sort') ?? 'asc'
+      const newSort = currentSort === 'asc' ? 'desc' : 'asc'
+      
+      const url = new URL(window.location.href)
+      url.searchParams.set('sort', newSort)
+      
+      window.location.href = url.toString()
+    }
+  </script>
+
+  <p>{pageProps.frontmatter.description}</p>
+
+  <form class="controls-container">
+    <details class="filters-container">
+      <summary class="filter-summary">
+        <p class="filter-title">Filters</p>
+        <button class="sort-toggle-button" type="button" onclick="toggleSort()">
+          <span>Sort by</span>
+          <Icon name={selectedSort === 'asc' ? 'down-arrow' : 'up-arrow'} />
+        </button>
+        <input type="hidden" name="sort" value={selectedSort} />
+      </summary>
+
+      <div class="filters">
+        <label>
+          Topics
+          <EslTopicSelector allTopics={allTopics} selectedTopics={selectedTopics} />
+        </label>
+
+        <label>
+          Resource Type
+          <select name="type">
+            <option value="" selected={selectedType === ''}>Any Type</option>
+            <option value="document" selected={selectedType === 'document'}
+              >Document</option
+            >
+            <option value="pdf" selected={selectedType === 'pdf'}
+              >PDF File</option
+            >
+            <option value="video" selected={selectedType === 'video'}
+              >Video</option
+            >
+            <option value="link" selected={selectedType === 'link'}
+              >Website Link</option
+            >
+          </select>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="action-button default" onclick="form.submit()">
+          Apply
+        </button>
+
+        <button
+          type="button"
+          class="action-button"
+          onclick="resetAllFilters()"
+        >
+          Reset
+        </button>
+      </div>
+    </details>
+
+    <noscript><button type="submit">Apply</button></noscript>
+  </form>
+
+  {
+    filteredItems.length === 0 ? (
+      <div class="empty-state">
+        <Icon name="magnifier" size="2em" />
+        {isCriteriaSet ? (
+          <p>
+            {Astro.locals.t('resources.emptyState.noResults')}
+            <br />
+            {Astro.locals.t('resources.emptyState.tryAdjustingFilters')}
+          </p>
+        ) : (
+          <p>{Astro.locals.t('resources.emptyState.noResults')}</p>
+        )}
+      </div>
+    ) : (
+      <CardGrid>
+        {filteredItems
+        .map(({ id, data, content }) => (
+          <Card title={data?.title ?? ''}>
+            <div class="card-separator" />
+
+            {data?.topics && data?.topics.length > 0 && (
+              <div class="card-topics">
+                {data.topics.map((topic) => (
+                  <EslTopicBadge topic={topic} />
+                ))}
+              </div>
+            )}
+
+            {data?.summary && <p class="card-summary">{data.summary}</p>}
+
+            <footer class="card-footer">
+              <div class="card-actions" role="group" aria-label="Card actions">
+                {content && content.type === 'video' && (
+                  <LinkButton 
+                    href={`/${lang}/esl-resources/${id}`}
+                    icon="seti:video"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    View
+                  </LinkButton>
+                )}
+
+                {content && content.type === 'pdf' && (
+                  <LinkButton
+                    href={`/${lang}/esl-resources/${id}`}
+                    icon="seti:pdf"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    View
+                  </LinkButton>
+                
+                  <LinkButton
+                    href={`/${lang}/esl-resources/${id}`}
+                    download
+                    icon="download"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    Download
+                  </LinkButton>
+                )}
+
+                {content && content.type === 'link' && (
+                  <LinkButton
+                    href={content.url}
+                    icon="external"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    Open Link
+                  </LinkButton>
+                )}
+
+                {content && content.type === 'document' && (
+                  <LinkButton
+                    href={`/${lang}/esl-resources/${id}`}
+                    icon="document"
+                    iconPlacement="end"
+                    variant="secondary"
+                  >
+                    View
+                  </LinkButton>
+                )}
+              </div>
+            </footer>
+          </Card>
+        ))}
+      </CardGrid>
+    )
+  }
+</StarlightPage>
+
+<script is:inline>
+  window.resetAllFilters = function () {
+    const form = document.querySelector('form.controls-container')
+    if (form) {
+      const topicCheckboxes = form.querySelectorAll('input[name="topic"]')
+      topicCheckboxes.forEach((checkbox) => {
+        checkbox.checked = false
+      })
+      form.querySelector('select[name="type"]').value = ''
+
+      form.submit()
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const topicLabels = document.querySelectorAll('.filters label')
+    topicLabels.forEach(label => {
+      const topicSelector = label.querySelector('.topic-selector')
+      const topicsGrid = label.querySelector('.topic-grid')
+      if (topicSelector) {
+        label.addEventListener('click', function(event) {
+          if (event.target === label || event.target === topicSelector || event.target === topicsGrid) {
+            event.preventDefault()
+          }
+        })
+      }
+    })
+  })
+</script>

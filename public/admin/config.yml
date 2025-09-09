@@ -168,3 +168,100 @@ collections:
                   i18n: true,
                   duplicate: true
                 }
+
+  - name: 'esl-resources'
+    label: 'ESL Resources'
+    folder: 'src/content/esl-resources'
+    create: true
+    summary: '{{content.0.type}}: {{title}}'
+    fields:
+      - name: title
+        label: 'ESL Resource Title'
+        widget: 'string'
+        duplicate: true
+
+      - name: summary
+        label: 'ESL Resource Summary'
+        widget: 'text'
+        duplicate: true
+
+      - name: topics
+        label: 'ESL Topics'
+        widget: select
+        duplicate: true
+        multiple: true
+        options:
+          - { label: 'Topic 1', value: 'topic-1' }
+          - { label: 'Topic 2', value: 'topic-2' }
+          - { label: 'Topic 3', value: 'topic-3' }
+
+      - name: content
+        label: 'ESL Resource Content'
+        hint: 'Add the content for the resource. Only one item is allowed.'
+        widget: list
+        duplicate: true
+        min: 1
+        max: 1
+        required: true
+        collapsed: false
+        types:
+          - name: document
+            label: 'Document'
+            summary: "{{title}} - {{body | truncate(50, '...')}}"
+            widget: object
+            duplicate: true
+            fields:
+              - {
+                  name: 'body',
+                  label: 'Body',
+                  widget: 'markdown',
+                  duplicate: true
+                }
+
+          - name: pdf
+            label: 'PDF File'
+            summary: '{{file}}'
+            widget: object
+            duplicate: true
+            fields:
+              - {
+                  name: 'description',
+                  label: 'Description',
+                  widget: 'text',
+                  duplicate: true,
+                  required: false
+                }
+              - {
+                  name: 'file',
+                  label: 'File Upload',
+                  widget: 'file',
+                  duplicate: true
+                }
+
+          - name: 'video'
+            label: 'Video File'
+            summary: '{{file}}'
+            widget: object
+            duplicate: true
+            fields:
+              - {
+                  name: 'description',
+                  label: 'Description',
+                  widget: 'text',
+                  duplicate: true,
+                  required: false
+                }
+              - {
+                  name: 'file',
+                  label: 'File Upload',
+                  widget: 'file',
+                  duplicate: true
+                }
+
+          - name: 'link'
+            label: 'External Link'
+            summary: '{{url}}'
+            widget: object
+            duplicate: true
+            fields:
+              - { name: 'url', label: 'URL', widget: 'string', duplicate: true }

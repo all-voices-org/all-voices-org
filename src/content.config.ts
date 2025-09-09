@@ -13,6 +13,8 @@ export const languageNames: Record<Locale, string> = {
   ht: 'Kreyòl ayisyen'
 }
 
+// -- Shared content schema
+
 const contentSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.enum(['document']),
@@ -33,6 +35,8 @@ const contentSchema = z.discriminatedUnion('type', [
     url: z.string().url()
   })
 ])
+
+// -- Resources for learners
 
 export const resourceProficiencyLevelSchema = z.enum(['beginner', 'intermediate', 'advanced'])
 
@@ -67,9 +71,34 @@ const resources = defineCollection({
   schema: resourceSchema.optional()
 })
 
+// -- ESL Resources for tutors
+
+export const eslResourceTopicSchema = z.enum([
+  'topic-1',
+  'topic-2',
+  'topic-3'
+])
+
+export type EslResourceTopic = z.infer<typeof eslResourceTopicSchema>
+
+export const eslResourceSchema = z.object({
+  title: z.string().optional(),
+  summary: z.string().optional(),
+  topics: z.array(eslResourceTopicSchema).optional().default([]),
+  content: z.array(contentSchema).optional()
+})
+
+const eslResources = defineCollection({
+  type: 'content',
+  schema: eslResourceSchema.optional(),
+})
+
+// -- Export collections
+
 export const collections = {
   docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
   resources,
+  'esl-resources': eslResources,
   i18n: defineCollection({
     loader: i18nLoader(),
     schema: i18nSchema({

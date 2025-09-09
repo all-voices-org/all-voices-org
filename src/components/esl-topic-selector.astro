@@ -1,10 +1,10 @@
 ---
-import TopicBadge from './topic-badge.astro'
-import { type ResourceTopic } from '../content.config'
+import { type EslResourceTopic } from '../content.config'
+import EslTopicBadge from './esl-topic-badge.astro'
 
 interface Props {
-  allTopics: ResourceTopic[]
-  selectedTopics: Set<ResourceTopic>
+  allTopics: EslResourceTopic[]
+  selectedTopics: Set<EslResourceTopic>
 }
 
 const { allTopics, selectedTopics } = Astro.props
@@ -22,7 +22,7 @@ const { allTopics, selectedTopics } = Astro.props
             checked={selectedTopics.has(topic)}
           />
           <div class="topic-badge-wrapper">
-            <TopicBadge topic={topic} />
+            <EslTopicBadge topic={topic} />
           </div>
         </label>
       ))
