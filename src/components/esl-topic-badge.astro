@@ -1,0 +1,95 @@
+---
+import { Badge } from '@astrojs/starlight/components'
+import colors from '@radix-ui/colors'
+import { type EslResourceTopic } from '../content.config'
+import type { Color } from './color'
+
+const palette: Record<string, Color> = {
+  color1: {
+    backgroundColor: colors.green.green2,
+    color: colors.green.green11,
+    borderColor: colors.green.green7
+  },
+  color2: {
+    backgroundColor: colors.yellow.yellow2,
+    color: colors.yellow.yellow11,
+    borderColor: colors.yellow.yellow7
+  },
+  color3: {
+    backgroundColor: colors.cyan.cyan2,
+    color: colors.cyan.cyan11,
+    borderColor: colors.cyan.cyan7
+  },
+  color4: {
+    backgroundColor: colors.lime.lime2,
+    color: colors.lime.lime11,
+    borderColor: colors.lime.lime7
+  },
+  color5: {
+    backgroundColor: colors.amber.amber2,
+    color: colors.amber.amber11,
+    borderColor: colors.amber.amber7
+  },
+  color6: {
+    backgroundColor: colors.red.red2,
+    color: colors.red.red11,
+    borderColor: colors.red.red7
+  },
+  color7: {
+    backgroundColor: colors.violet.violet2,
+    color: colors.violet.violet11,
+    borderColor: colors.violet.violet7
+  },
+  color8: {
+    backgroundColor: colors.indigo.indigo2,
+    color: colors.indigo.indigo11,
+    borderColor: colors.indigo.indigo7
+  },
+  color9: {
+    backgroundColor: colors.grass.grass2,
+    color: colors.grass.grass11,
+    borderColor: colors.grass.grass7
+  },
+  color10: {
+    backgroundColor: colors.bronze.bronze2,
+    color: colors.bronze.bronze11,
+    borderColor: colors.bronze.bronze7
+  },
+  color11: {
+    backgroundColor: colors.sky.sky2,
+    color: colors.sky.sky11,
+    borderColor: colors.sky.sky7
+  }
+}
+
+const topicBadges: Record<EslResourceTopic, Color> = {
+  'topic-1': palette.color1,
+  'topic-2': palette.color2,
+  'topic-3': palette.color3
+}
+
+const topicNames = {
+  'topic-1': 'Topic 1',
+  'topic-2': 'Topic 2',
+  'topic-3': 'Topic 3'
+} as const
+
+interface Props {
+  topic: EslResourceTopic
+}
+
+const { topic } = Astro.props
+---
+
+<Badge
+  text={topicNames[topic] ?? topic}
+  style={{
+    color: `${topicBadges[topic]?.color ?? 'black'}`,
+    'background-color': `${topicBadges[topic]?.backgroundColor ?? 'gray'}`,
+    border: `1px solid ${topicBadges[topic]?.borderColor ?? topicBadges[topic]?.color ?? 'black'}`,
+    'border-radius': '0.5rem',
+    padding: '0.25rem 0.5rem',
+    'font-size': '0.75rem'
+  }}
+  size={'small'}
+/>
