@@ -24,6 +24,14 @@
   "resource.notFound.suggestion": "يرجى التحقق من الرابط أو {{link}}.",
   "resource.notFound.linkText": "العودة إلى صفحة الموارد",
 
+  "resource.types.any": "أي نوع",
+  "resource.types.vocabulary-builder-worksheet": "ورقة عمل بناء المفردات",
+  "resource.types.reading-comprehension-check": "فحص القراءة والفهم",
+  "resource.types.writing-prompts": "مطالبات الكتابة",
+  "resource.types.conversation-templates": "قوالب المحادثة",
+  "resource.types.video": "فيديو",
+  "resource.types.conversation-cards": "بطاقات المحادثة",
+
   "resource.topics.johnson-county-culture": "ثقافة مقاطعة جونسون",
   "resource.topics.bussing-transportation": "الحافلات والنقل",
   "resource.topics.shopping": "التسوق",
@@ -39,5 +47,7 @@
   "resource.levels.any": "أي مستوى",
   "resource.levels.beginner": "مبتدئ",
   "resource.levels.intermediate": "متوسط",
-  "resource.levels.advanced": "متقدم"
+  "resource.levels.advanced": "متقدم",
+
+  "resource.languages.any": "أي لغة"
 }

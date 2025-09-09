@@ -1,7 +1,11 @@
 ---
 title: Document With Link, Image and YouTube Video
+type: writing-prompts
 summary: This document showcases various media types including links, images,
   and YouTube videos.
+level: advanced
+topics:
+  - bussing-transportation
 content:
   - type: document
     body: >-

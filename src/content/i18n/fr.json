@@ -24,6 +24,14 @@
   "resource.notFound.suggestion": "Veuillez vérifier l'URL ou {{link}}.",
   "resource.notFound.linkText": "retourner à la page des ressources",
 
+  "resource.types.any": "Tout Type",
+  "resource.types.vocabulary-builder-worksheet": "Feuille de Travail de Construction de Vocabulaire",
+  "resource.types.reading-comprehension-check": "Contrôle de Lecture et Compréhension",
+  "resource.types.writing-prompts": "Consignes d'Écriture",
+  "resource.types.conversation-templates": "Modèles de Conversation",
+  "resource.types.video": "Vidéo",
+  "resource.types.conversation-cards": "Cartes de Conversation",
+
   "resource.topics.johnson-county-culture": "Culture du Comté de Johnson",
   "resource.topics.bussing-transportation": "Transport en Autobus",
   "resource.topics.shopping": "Achats",
@@ -39,5 +47,7 @@
   "resource.levels.any": "Tout Niveau",
   "resource.levels.beginner": "Débutant",
   "resource.levels.intermediate": "Intermédiaire",
-  "resource.levels.advanced": "Avancé"
+  "resource.levels.advanced": "Avancé",
+
+  "resource.languages.any": "Toute Langue"
 }

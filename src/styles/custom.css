@@ -178,6 +178,10 @@ header {
   margin-top: 1rem;
 }
 
+.card .card-resource-type {
+  font-size: 0.75rem;
+}
+
 .card .card-separator {
   border-top: 1px solid var(--sl-color-accent);
   margin: 0.5rem 0 0 0;
