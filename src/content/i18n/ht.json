@@ -78,5 +78,7 @@
   "resource.levels.intermediate": "Entèmedyè",
   "resource.levels.advanced": "Avanse",
 
-  "resource.languages.any": "Nenpòt Lang"
+  "resource.languages.any": "Nenpòt Lang",
+
+  "ui.languages": "Lang yo"
 }

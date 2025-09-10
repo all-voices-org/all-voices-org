@@ -14,7 +14,10 @@ const { name, imageUrl, altText, bio, languages } = Astro.props
   <img src={imageUrl} alt={altText} class="profile-image" />
   <h3>{name}</h3>
   <p class="bio">{bio}</p>
-  <p class="languages"><strong>Languages:</strong> {languages}</p>
+  <p class="languages">
+    <strong>{Astro.locals.t('ui.languages')}:</strong>
+    {languages}
+  </p>
 </div>
 
 <style>

@@ -78,5 +78,7 @@
   "resource.levels.intermediate": "Kati",
   "resource.levels.advanced": "Juu",
 
-  "resource.languages.any": "Lugha Yoyote"
+  "resource.languages.any": "Lugha Yoyote",
+
+  "ui.languages": "Lugha"
 }

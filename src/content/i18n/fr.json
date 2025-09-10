@@ -49,5 +49,7 @@
   "resource.levels.intermediate": "Intermédiaire",
   "resource.levels.advanced": "Avancé",
 
-  "resource.languages.any": "Toute Langue"
+  "resource.languages.any": "Toute Langue",
+
+  "ui.languages": "Langues"
 }

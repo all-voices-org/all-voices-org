@@ -164,6 +164,8 @@ export const collections = {
         'resource.levels.advanced': z.string(),
 
         'resource.languages.any': z.string(),
+
+        'ui.languages': z.string()
       })
     })
   })
