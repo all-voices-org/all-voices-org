@@ -84,9 +84,9 @@ const resources = defineCollection({
 // -- ESL Resources for tutors
 
 export const eslResourceTopicSchema = z.enum([
-  'topic-1',
-  'topic-2',
-  'topic-3'
+  'new-tutor-essentials',
+  'lesson-planning-resources',
+  'advanced-teaching-methods'
 ])
 
 export type EslResourceTopic = z.infer<typeof eslResourceTopicSchema>

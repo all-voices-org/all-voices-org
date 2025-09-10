@@ -211,9 +211,15 @@ collections:
         duplicate: true
         multiple: true
         options:
-          - { label: 'Topic 1', value: 'topic-1' }
-          - { label: 'Topic 2', value: 'topic-2' }
-          - { label: 'Topic 3', value: 'topic-3' }
+          - { label: 'New Tutor Essentials', value: 'new-tutor-essentials' }
+          - {
+              label: 'Lesson Planning & Resources',
+              value: 'lesson-planning-resources'
+            }
+          - {
+              label: 'Advanced Teaching Methods',
+              value: 'advanced-teaching-methods'
+            }
 
       - name: content
         label: 'ESL Resource Content'

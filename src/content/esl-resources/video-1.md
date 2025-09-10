@@ -2,8 +2,7 @@
 title: Video 1
 summary: Something here about this video
 topics:
-  - topic-1
-  - topic-3
+  - new-tutor-essentials
 content:
   - type: video
     description: Some description for the video here
