@@ -1,15 +1,11 @@
 ---
 export interface Props {
-  title?: string
-  description?: string
-  imageAlt?: string
+  title: string
+  description: string
+  imageAlt: string
 }
 
-const {
-  title = 'Welcome to All Voices',
-  description = 'Free ESL resources for Johnson County — download guides and watch lessons in your language.',
-  imageAlt = 'Josie and Olga from All Voices seated at a table'
-} = Astro.props
+const { title, description, imageAlt } = Astro.props
 ---
 
 <section id="welcome" class="hero-gradient">
