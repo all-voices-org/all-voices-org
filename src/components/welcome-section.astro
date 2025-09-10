@@ -16,7 +16,7 @@ const { title, description, imageAlt } = Astro.props
         {description}
       </p>
     </div>
-    <picture>
+    <picture class="hero-image-container">
       <source srcset="/brand/hero-josie-olga.webp" type="image/webp" />
       <img src="/brand/hero-josie-olga.png" alt={imageAlt} class="hero-image" />
     </picture>
