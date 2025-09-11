@@ -1,12 +1,13 @@
 ---
-title: Some Video File
-summary: This document showcases a video file.
+title: Bussing in Johnson County
+type: conversation-templates
+summary: Learn about and discuss how your local community interacts with public
+  transportation.
+level: advanced
 topics:
   - johnson-county-culture
-  - parent-responsibilities
-  - shopping
+  - bussing-transportation
 content:
-  - type: video
-    description: Optional description for the video file.
-    file: /assets/uploads/cleanshot-2025-08-31-at-17.19.34.mp4
+  - type: pdf
+    file: file:///Users/josiembaye/Downloads/Advanced-Reading%20and%20Comprehension%20check-Bussing%20and%20Transportation.pdf
 ---
