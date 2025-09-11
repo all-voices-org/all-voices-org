@@ -1,8 +1,12 @@
 ---
-title: Johnson County, Iowa Resource Directory
-summary: A PDF document containing the resource directory.
+title: Discussing Interviews
+type: conversation-cards
+summary: Practice conversational skills related to interviewing.
+level: intermediate
+topics:
+  - interviewing
 content:
   - type: pdf
-    description: A comprehensive resource directory for immigrants and refugees in Johnson County, Iowa.
-    file: /assets/uploads/resource-directory-2025-immigrang-refugee-services.pdf
+    description: ""
+    file: /assets/uploads/intermediate-conversation-cards-interview.pdf
 ---
