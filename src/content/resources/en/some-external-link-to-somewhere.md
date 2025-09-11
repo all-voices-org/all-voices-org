@@ -7,5 +7,5 @@ topics:
   - parent-responsibilities
 content:
   - type: pdf
-    file: /assets/uploads/cleanshot-2025-08-31-at-17.19.34.mp4
+    file: file:///Users/josiembaye/Downloads/Beginner-%20Vocabulary%20Builder%20Worksheet-Parent%20Responsibilities.pdf
 ---
