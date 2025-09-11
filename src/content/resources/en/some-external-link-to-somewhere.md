@@ -1,9 +1,11 @@
 ---
-title: Some External Link to Somewhere
-summary: This is a link to an external resource.
+title: Parenting Vocabulary Builder
+type: vocabulary-builder-worksheet
+summary: Learn words related to caring for your children.
+level: beginner
 topics:
-  - health-care
+  - parent-responsibilities
 content:
-  - type: link
-    url: https://johnsoncountyiowa.gov/
+  - type: pdf
+    file: /assets/uploads/cleanshot-2025-08-31-at-17.19.34.mp4
 ---
