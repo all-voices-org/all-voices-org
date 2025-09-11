@@ -8,5 +8,5 @@ topics:
   - interviewing
 content:
   - type: pdf
-    file: file:///Users/josiembaye/Downloads/drive-download-20250911T022913Z-1-001/Intermediate%20-%20Reading%20&%20Comprehension%20Check%20-%20Interviewing.pdf
+    file: /assets/uploads/intermediate-reading-comprehension-check-interviewing.pdf
 ---
