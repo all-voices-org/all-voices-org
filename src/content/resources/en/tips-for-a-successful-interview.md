@@ -8,5 +8,5 @@ topics:
   - interviewing
 content:
   - type: pdf
-    file: /assets/uploads/beginner-writing-prompt-johnson-county-culture.pdf
+    file: file:///Users/josiembaye/Downloads/drive-download-20250911T022913Z-1-001/Intermediate%20-%20Reading%20&%20Comprehension%20Check%20-%20Interviewing.pdf
 ---
