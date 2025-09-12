@@ -9,5 +9,5 @@ topics:
   - bussing-transportation
 content:
   - type: pdf
-    file: file:///Users/josiembaye/Downloads/Advanced-Reading%20and%20Comprehension%20check-Bussing%20and%20Transportation.pdf
+    file: /assets/uploads/advanced-reading-and-comprehension-check-bussing-and-transportation.pdf
 ---
