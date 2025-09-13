@@ -7,5 +7,5 @@ topics:
   - johnson-county-culture
 content:
   - type: pdf
-    file: /assets/uploads/beginner-writing-prompt-johnson-county-culture.pdf
+    file: /assets/uploads/beginner-writing-prompt-shopping.pdf
 ---
