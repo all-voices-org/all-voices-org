@@ -15,7 +15,7 @@ export default defineConfig({
         src: './src/assets/logo-bubble.png',
         alt: 'All Voices — community ESL resources'
       },
-      favicon: './src/assets/logo-mark.png',
+      favicon: 'brand/logo-mark.png',
       customCss: ['./src/styles/custom.css'],
       titleDelimiter: '',
       tableOfContents: false,
