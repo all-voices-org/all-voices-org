@@ -6,6 +6,9 @@ level: beginner
 topics:
   - shopping
 content:
-  - type: pdf
-    file: /assets/uploads/beginner-reading-and-comprehension-check-shopping.png
+  - type: document
+    body: |-
+      
+
+      ![](/assets/uploads/beginner-reading-and-comprehension-check-shopping.png)
 ---
