@@ -1,0 +1,381 @@
+---
+import { LinkButton } from '@astrojs/starlight/components'
+
+export interface Props {
+  pdfUrl: string
+  height?: string
+  width?: string
+}
+
+const { pdfUrl, height = 'auto', width = '100%' } = Astro.props
+---
+
+<div
+  class="pdf-container"
+  style={height !== 'auto'
+    ? `height: ${height}; width: ${width};`
+    : `width: ${width};`}
+>
+  <div class="pdf-toolbar">
+    <div class="toolbar-left">
+      <LinkButton
+        id="download-button"
+        href={pdfUrl}
+        download
+        icon="download"
+        iconPlacement="end"
+        variant="secondary"
+      >
+        Download
+      </LinkButton>
+    </div>
+    <div class="toolbar-right">
+      <LinkButton
+        id="prev-page"
+        href="#"
+        title="Previous page"
+        icon="left-caret"
+        variant="secondary"
+        class={'nav-button prev-page disabled'}
+      />
+
+      <span class="page-info">
+        <span id="page-num">1</span> / <span id="page-count">-</span>
+      </span>
+
+      <LinkButton
+        id="next-page"
+        href="#"
+        title="Next page"
+        icon="right-caret"
+        variant="secondary"
+        class={'nav-button next-page'}
+      />
+    </div>
+  </div>
+  <div class="pdf-viewer">
+    <div id="loading" class="loading">
+      <div class="loading-content">
+        <span class="loading-spinner"></span>
+        <span>Loading...</span>
+      </div>
+    </div>
+    <canvas id="pdf-canvas"></canvas>
+  </div>
+</div>
+
+<style>
+  .pdf-container {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--sl-color-bg);
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    min-height: 60vh;
+    height: 80vh;
+    max-height: 90vh;
+  }
+
+  @media (max-width: 768px) {
+    .pdf-container {
+      height: 70vh;
+      min-height: 50vh;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .pdf-container {
+      height: 60vh;
+      min-height: 40vh;
+    }
+  }
+
+  .pdf-toolbar {
+    background: var(--sl-color-bg-nav);
+    padding: var(--sl-spacing-2);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .toolbar-left,
+  .toolbar-right {
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 1rem;
+  }
+
+  .toolbar-left {
+    display: flex;
+  }
+
+  .toolbar-right {
+    display: none;
+    gap: 0.5rem;
+  }
+
+  .nav-button {
+    margin: 0;
+    padding: 0.5rem 0.5rem !important;
+  }
+
+  .nav-button.disabled {
+    opacity: 0.5;
+    cursor: inherit;
+  }
+
+  .nav-button.prev-page {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .nav-button.next-page {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .nav-button.disabled:hover {
+    background: inherit;
+  }
+
+  .page-info {
+    color: var(--sl-color-text-accent);
+    font-weight: 500;
+    min-width: 2.25rem;
+    text-align: center;
+    align-self: center;
+  }
+
+  .pdf-viewer {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--sl-color-gray-7);
+    display: block;
+    position: relative;
+    min-height: 0;
+    margin: 0;
+  }
+
+  #download-button {
+    margin: 0;
+  }
+
+  #pdf-canvas {
+    width: calc(100% - 80px);
+    height: auto;
+    box-shadow: var(--sl-shadow-lg);
+    margin: 40px;
+  }
+
+  .loading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sl-spacing-2);
+    color: var(--sl-color-white);
+    background: var(--sl-color-bg-sidebar);
+    padding: var(--sl-spacing-4);
+    border-radius: var(--sl-border-radius);
+    background-color: transparent;
+    gap: 1rem;
+  }
+
+  .loading-spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 4px solid var(--sl-color-accent);
+    border-top: 4px solid var(--sl-color-text-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ pdfUrl }}>
+  function initPDF() {
+    if (typeof window.pdfjsLib === 'undefined') {
+      console.log('PDF.js not loaded yet, retrying...')
+      setTimeout(initPDF, 100)
+      return
+    }
+
+    const pdfjsLib = window.pdfjsLib
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js'
+
+    let pdfDoc = null
+    let currentPage = 1
+    const canvas = document.getElementById('pdf-canvas')
+    const ctx = canvas.getContext('2d')
+    const loading = document.getElementById('loading')
+
+    pdfjsLib
+      .getDocument(pdfUrl)
+      .promise.then(function (pdf) {
+        pdfDoc = pdf
+        document.getElementById('page-count').textContent = pdfDoc.numPages
+        renderPage(currentPage)
+        updateNavigationButtons()
+        loading.style.display = 'none'
+      })
+      .catch(function (error) {
+        console.error('Error loading PDF:', error)
+        loading.innerHTML = `Error loading PDF: ${error.message}`
+        loading.style.color = '#d32f2f'
+      })
+
+    function renderPage(pageNumber) {
+      pdfDoc.getPage(pageNumber).then(function (page) {
+        const container = document.querySelector('.pdf-viewer')
+        const containerWidth = container.clientWidth - 80
+
+        const viewport = page.getViewport({ scale: 1.0 })
+        const scale = containerWidth / viewport.width
+
+        const devicePixelRatio = window.devicePixelRatio || 1
+        const scaledViewport = page.getViewport({
+          scale: scale * devicePixelRatio
+        })
+
+        canvas.style.width = containerWidth + 'px'
+        canvas.style.height = viewport.height * scale + 'px'
+
+        canvas.width = scaledViewport.width
+        canvas.height = scaledViewport.height
+
+        ctx.scale(devicePixelRatio, devicePixelRatio)
+
+        page.render({
+          canvasContext: ctx,
+          viewport: page.getViewport({ scale: scale })
+        })
+
+        document.getElementById('page-num').textContent = pageNumber
+        currentPage = pageNumber
+      })
+    }
+
+    function updateNavigationButtons() {
+      const prevButton = document.getElementById('prev-page')
+      const nextButton = document.getElementById('next-page')
+
+      if (prevButton) {
+        prevButton.classList.toggle('disabled', currentPage <= 1)
+      }
+
+      if (nextButton) {
+        nextButton.classList.toggle('disabled', currentPage >= pdfDoc.numPages)
+      }
+
+      const rightPanel = document.querySelector('.toolbar-right')
+      if (rightPanel) {
+        rightPanel.style.display = pdfDoc.numPages <= 1 ? 'none' : 'flex'
+      }
+    }
+
+    function goToPreviousPage() {
+      if (currentPage <= 1) return
+      currentPage--
+      renderPage(currentPage)
+      updateNavigationButtons()
+    }
+
+    function goToNextPage() {
+      if (currentPage >= pdfDoc.numPages) return
+      currentPage++
+      renderPage(currentPage)
+      updateNavigationButtons()
+    }
+
+    function handleResize() {
+      if (pdfDoc) {
+        renderPage(currentPage)
+      }
+    }
+
+    window.addEventListener('resize', debounce(handleResize, 250))
+
+    document
+      .getElementById('prev-page')
+      .addEventListener('click', goToPreviousPage)
+    document.getElementById('next-page').addEventListener('click', goToNextPage)
+
+    document.addEventListener('keydown', function (e) {
+      if (e.target.closest('.pdf-container')) {
+        switch (e.key) {
+          case 'ArrowLeft':
+          case 'PageUp':
+            e.preventDefault()
+            goToPreviousPage()
+            break
+          case 'ArrowRight':
+          case 'PageDown':
+            e.preventDefault()
+            goToNextPage()
+            break
+        }
+      }
+    })
+
+    function debounce(func, wait) {
+      let timeout
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout)
+          func(...args)
+        }
+        clearTimeout(timeout)
+        timeout = setTimeout(later, wait)
+      }
+    }
+
+    function downloadPDF() {
+      const link = document.createElement('a')
+      link.href = pdfUrl
+      link.download = pdfUrl.split('/').pop() || 'document.pdf'
+      link.target = '_blank'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+
+    document
+      .getElementById('download-button')
+      .addEventListener('click', function () {
+        downloadPDF()
+      })
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPDF)
+  } else {
+    initPDF()
+  }
+</script>
+
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"
+  onload="console.log('PDF.js loaded')"></script>
