@@ -6,9 +6,6 @@ level: beginner
 topics:
   - johnson-county-culture
 content:
-  - type: document
-    body: >-
-      
-
-      ![](/assets/uploads/beginner-reading-and-comprehension-johnson-county-culture.png)
+  - type: pdf
+    file: /assets/uploads/beginner-reading-and-comprehension-check-johnson-county-culture.pdf
 ---
