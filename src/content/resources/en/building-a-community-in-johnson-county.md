@@ -1,7 +1,7 @@
 ---
-title: Building a Community in Johnson County
+title: Community Building in Johnson County
 type: writing-prompts
-summary: Write and reflect about building community in your area.
+summary: Write and reflect about community building in your area.
 level: advanced
 topics:
   - johnson-county-culture
