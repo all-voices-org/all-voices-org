@@ -84,6 +84,12 @@ interface Props {
 const { topic, size = 'medium' } = Astro.props
 ---
 
+<style>
+  :global([data-theme='dark']) .sl-badge {
+    filter: invert(1);
+  }
+</style>
+
 <Badge
   text={Astro.locals.t(`resource.topics.${topic}`)}
   style={{
