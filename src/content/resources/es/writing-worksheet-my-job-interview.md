@@ -1,4 +1,1 @@
----
-content:
-  - type: pdf
----
+
