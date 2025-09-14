@@ -1,10 +1,12 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import { Icon } from '@astrojs/starlight/components'
 import type { StarlightPageProps } from '@astrojs/starlight/props'
 import { getCollection } from 'astro:content'
 import type { TOptions } from 'i18next'
 import { marked, type MarkedExtension } from 'marked'
 import PdfPreview from '../../../../components/pdf-preview.astro'
+import TopicBadge from '../../../../components/topic-badge.astro'
 
 interface Props {
   lang: string
@@ -81,6 +83,18 @@ const notFoundSuggestion = Astro.locals.t('resource.notFound.suggestion', {
 } as TOptions)
 ---
 
+<style>
+  .resource-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--sl-color-text-accent);
+    margin-bottom: 1.5rem;
+  }
+</style>
+
 <StarlightPage {...pageProps}>
   {(content == null) && (
     <p>
@@ -89,6 +103,28 @@ const notFoundSuggestion = Astro.locals.t('resource.notFound.suggestion', {
 
     <p set:html={notFoundSuggestion} />
   )}
+
+  <div class="resource-breadcrumbs">
+    {resource?.data?.level && (
+      <span>{Astro.locals.t(`resource.levels.${resource.data.level}`)}</span>
+    )}
+
+    {resource?.data?.type && (
+      <>
+        <Icon name="right-caret" size="1rem" />
+        <span>{Astro.locals.t(`resource.types.${resource.data.type}`)}</span>
+      </>
+    )}
+
+    {resource?.data?.topics && resource.data.topics.length > 0 && (
+      <>
+        <Icon name="right-caret" size="1rem" />
+        {resource.data.topics.map((topic) => (
+          <TopicBadge topic={topic} size='small' />
+        ))}
+      </>
+    )}
+  </div>
 
   {content != null && content.type === 'document' && (
     <article set:html={markdown} />
