@@ -75,8 +75,18 @@ const currentStyle = proficiencyStyles[proficiencyLevel]
     border-color: hsl(from var(--tagColor) h s l / 0.5);
   }
 
+  .proficiency-card-wrapper :global(.card .card-resource-type) {
+    color: var(--tagColor);
+    margin-top: 0.5rem;
+  }
+
   .proficiency-card-wrapper :global(.card .card-separator) {
     border-color: hsl(from var(--tagColor) h s l / 0.5);
+    margin-top: 0.25rem;
+  }
+
+  .proficiency-card-wrapper :global(.card .card-topics) {
+    margin-top: 0.5rem;
   }
 
   .proficiency-card-wrapper
