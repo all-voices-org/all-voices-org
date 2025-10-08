@@ -65,6 +65,11 @@ const SCRIPT_PATH = `https://unpkg.com/pdfjs-dist@${version}/build/pdf.min.mjs`
       </div>
     </div>
     <canvas dir="ltr" id="pdf-canvas"></canvas>
+    <img
+      id="image-fallback"
+      style="display: none; max-width: 100%; height: auto; margin: 40px;"
+      alt="Document preview"
+    />
   </div>
 </div>
 
@@ -255,8 +260,30 @@ const SCRIPT_PATH = `https://unpkg.com/pdfjs-dist@${version}/build/pdf.min.mjs`
       })
       .catch(function (error) {
         console.error('Error loading PDF:', error)
-        loading.innerHTML = `Error loading PDF: ${error.message}`
-        loading.style.color = '#d32f2f'
+        console.log('Attempting to display as image instead...')
+
+        // Try to display as an image instead
+        const imageFallback = document.getElementById('image-fallback')
+        const canvas = document.getElementById('pdf-canvas')
+
+        imageFallback.src = pdfUrl
+        imageFallback.style.display = 'block'
+        canvas.style.display = 'none'
+
+        // Hide navigation buttons since it's just an image
+        const rightPanel = document.querySelector('.toolbar-right')
+        if (rightPanel) {
+          rightPanel.style.display = 'none'
+        }
+
+        imageFallback.onload = function () {
+          loading.style.display = 'none'
+        }
+
+        imageFallback.onerror = function () {
+          loading.innerHTML = `Error loading document: ${error.message}`
+          loading.style.color = '#d32f2f'
+        }
       })
 
     function renderPage(pageNumber) {
