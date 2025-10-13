@@ -7,5 +7,5 @@ topics:
   - work-situations
 content:
   - type: pdf
-    file: /assets/uploads/beginner-reading-comprehension-activity-work-situatuions.png
+    file: /assets/uploads/beginner-reading-comprehension-activity-work-situatuions.pdf
 ---
