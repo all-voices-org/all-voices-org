@@ -7,5 +7,5 @@ topics:
   - work-situations
 content:
   - type: pdf
-    file: /assets/uploads/beginner-conversation-cards-work-situations-.png
+    file: /assets/uploads/beginner-conversation-cards-work-situations-.pdf
 ---
