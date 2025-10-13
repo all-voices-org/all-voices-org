@@ -7,5 +7,5 @@ topics:
   - ordering-food
 content:
   - type: pdf
-    file: /assets/uploads/beginner-reading-and-comprehension-ordering-food.png
+    file: /assets/uploads/beginner-reading-and-comprehension-ordering-food.pdf
 ---
