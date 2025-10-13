@@ -7,5 +7,5 @@ topics:
   - ordering-food
 content:
   - type: pdf
-    file: /assets/uploads/simple-english-conversation-questions-answers-worksheet.png
+    file: /assets/uploads/simple-english-conversation-questions-answers-worksheet.pdf
 ---
