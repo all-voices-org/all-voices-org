@@ -1,7 +1,7 @@
 ---
 title: Making an Appointment and Leaving a Message
 type: conversation-templates
-summary: Read two example phone conversations.
+summary: Practice having two example phone conversations.
 level: intermediate
 topics:
   - talking-on-the-phone
