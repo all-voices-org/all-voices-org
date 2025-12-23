@@ -7,6 +7,7 @@ import type { TOptions } from 'i18next'
 import { marked, type MarkedExtension } from 'marked'
 import PdfPreview from '../../../../components/pdf-preview.astro'
 import TopicBadge from '../../../../components/topic-badge.astro'
+import { proficiencyLevelStyles } from '../../../../components/proficiency-level-styles'
 
 interface Props {
   lang: string
@@ -34,6 +35,8 @@ const pageProps: StarlightPageProps = {
 }
 
 const content = resource?.data?.content?.at(0)
+const proficiencyLevel = resource?.data?.level ?? 'beginner'
+const breadcrumbsStyle = proficiencyLevelStyles[proficiencyLevel]
 
 export const youtubeExtension: MarkedExtension = {
   extensions: [{
@@ -83,15 +86,23 @@ const notFoundSuggestion = Astro.locals.t('resource.notFound.suggestion', {
 } as TOptions)
 ---
 
-<style>
+<style 
+  define:vars={{
+    breadcrumbsColor: breadcrumbsStyle.darkColor,
+  }}
+>
   .resource-breadcrumbs {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.25rem;
     font-size: 0.75rem;
-    color: var(--sl-color-text-accent);
+    color: var(--breadcrumbsColor);
     margin-bottom: 1.5rem;
+  }
+  
+  .resource-breadcrumbs .breadcrumbs-icon {
+    color: var(--breadcrumbsColor);
   }
 </style>
 
@@ -111,14 +122,14 @@ const notFoundSuggestion = Astro.locals.t('resource.notFound.suggestion', {
 
     {resource?.data?.type && (
       <>
-        <Icon name="right-caret" size="1rem" />
+        <Icon name="right-caret" size="1rem" class="breadcrumbs-icon" />
         <span>{Astro.locals.t(`resource.types.${resource.data.type}`)}</span>
       </>
     )}
 
     {resource?.data?.topics && resource.data.topics.length > 0 && (
       <>
-        <Icon name="right-caret" size="1rem" />
+        <Icon name="right-caret" size="1rem" class="breadcrumbs-icon"/>
         {resource.data.topics.map((topic) => (
           <TopicBadge topic={topic} size='small' />
         ))}

@@ -1,7 +1,7 @@
 ---
 import { Card } from '@astrojs/starlight/components'
-import colors from '@radix-ui/colors'
 import type { ResourceProficiencyLevel } from '../content.config'
+import { proficiencyLevelStyles } from './proficiency-level-styles'
 
 export interface Props {
   title: string
@@ -10,23 +10,7 @@ export interface Props {
 }
 
 const { title, proficiencyLevel = 'beginner', ...cardProps } = Astro.props
-
-const proficiencyStyles = {
-  beginner: {
-    tagColor: colors.green.green8,
-    tagText: colors.green.green3
-  },
-  intermediate: {
-    tagColor: colors.blue.blue8,
-    tagText: colors.blue.blue3
-  },
-  advanced: {
-    tagColor: colors.purple.purple8,
-    tagText: colors.purple.purple3
-  }
-}
-
-const currentStyle = proficiencyStyles[proficiencyLevel]
+const currentStyle = proficiencyLevelStyles[proficiencyLevel]
 ---
 
 <div class="proficiency-card-wrapper" data-proficiency={proficiencyLevel}>
@@ -40,8 +24,8 @@ const currentStyle = proficiencyStyles[proficiencyLevel]
 
 <style
   define:vars={{
-    tagColor: currentStyle.tagColor,
-    tagText: currentStyle.tagText
+    tagColor: currentStyle.darkColor,
+    tagText: currentStyle.lightColor
   }}
 >
   .proficiency-card-wrapper {
@@ -75,8 +59,18 @@ const currentStyle = proficiencyStyles[proficiencyLevel]
     border-color: hsl(from var(--tagColor) h s l / 0.5);
   }
 
+  .proficiency-card-wrapper :global(.card .card-resource-type) {
+    color: var(--tagColor);
+    margin-top: 0.5rem;
+  }
+
   .proficiency-card-wrapper :global(.card .card-separator) {
     border-color: hsl(from var(--tagColor) h s l / 0.5);
+    margin-top: 0.25rem;
+  }
+
+  .proficiency-card-wrapper :global(.card .card-topics) {
+    margin-top: 0.5rem;
   }
 
   .proficiency-card-wrapper
